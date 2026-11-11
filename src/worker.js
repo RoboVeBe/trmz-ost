@@ -108,6 +108,7 @@ async function admin(req, env, path) {
     if (!site || !Array.isArray(site.tapes)) return json({ error: 'tapes missing' }, 400);
     site.tapes = site.tapes.filter(t => t && ID_RE.test(t.id)).map(t => ({
       id: t.id, title: String(t.title || '').slice(0, 200), artist: String(t.artist || '').slice(0, 120), msg: String(t.msg || '').slice(0, 300),
+      link: /^https?:\/\/[^\s"'<>]+$/i.test(String(t.link || '')) ? String(t.link).slice(0, 300) : '',
       label: ['cream', 'white', 'orange', 'black'].includes(t.label) ? t.label : 'cream', dur: Number(t.dur) || 0, download: t.download !== false, file: String(t.file || '').slice(0, 200)
     }));
     site.updated = new Date().toISOString();

@@ -49,6 +49,13 @@
   #tbar button:focus-visible{outline:4px solid #ffb347;outline-offset:3px}
   #tbar button.on{background:linear-gradient(#ff8a4a,#c4501f);color:#1a0d08;border-color:#ffb380}
   #tbar button:disabled{opacity:.35}
+  #tbCredit{display:flex;align-items:center;gap:8px;max-width:340px;padding:8px 12px;border-radius:12px;color:#ffcf9a;font:600 15px system-ui;text-decoration:none;border:1px solid transparent}
+  #tbCredit span#tbcText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #tbCredit .yt{display:none}
+  #tbCredit.has{cursor:pointer;border-color:#6b4430;background:rgba(255,0,51,.08)}
+  #tbCredit.has:hover{background:rgba(255,0,51,.2);color:#fff}
+  #tbCredit.has .yt{display:inline-flex}
+  @media (max-width:1100px){#tbCredit{display:none!important}}
   #tbTime{min-width:110px;text-align:center;color:#ffcf9a;font:600 18px system-ui;font-variant-numeric:tabular-nums}
   body.idle,body.idle canvas{cursor:none}
   body.editing #tbar,body.exporting #tbar{display:none}
@@ -124,6 +131,7 @@
     <label class="ck"><input type="checkbox" id="optVig" checked> Vignette</label>
     <label class="ck">Frame zoom <input type="range" id="optFrame" min="0.6" max="1.4" step="0.01" value="0.8" style="width:110px;accent-color:#e0703a"> <span id="frameVal">80%</span></label>
     <label class="ck"><input type="checkbox" id="optRacks" checked> Tape racks</label>
+    <label class="ck"><input type="checkbox" id="optRackHide" checked> Hide racks when idle</label>
     <button id="addTapesBtn" class="hot">＋ Add tapes</button>
     <label class="ck"><input type="checkbox" id="optFsExp" checked> Fullscreen while exporting</label>
     <button id="fsBtn" class="hot">🎬 Fullscreen (hide controls)</button>
@@ -157,6 +165,7 @@
   <div id="tdForm">
     <label>Song name<input type="text" id="tdTitle"></label>
     <label>Made by (creator)<input type="text" id="tdArtist"></label>
+    <label>Creator link (YouTube) <span class="hint">optional, e.g. https://youtube.com/@name</span><input type="text" id="tdLink" placeholder="https://www.youtube.com/@..."></label>
     <label>LCD message <span class="hint">(optional, use | for several)</span><input type="text" id="tdMsg"></label>
     <label class="ck" id="tdDlRow" style="display:none;margin-top:12px"><input type="checkbox" id="tdDl" style="width:auto;display:inline;margin:0 6px 0 0"> Fans can download this tape</label>
     <div class="tmRow">Label: <span data-dc="cream"></span><span data-dc="white"></span><span data-dc="orange"></span><span data-dc="black"></span></div>
@@ -173,7 +182,7 @@
   <button data-a="up">↑ Move up</button><button data-a="down">↓ Move down</button>
   <button data-a="del" class="danger">🗑 Remove tape…</button></div>
 <input type="file" id="tapeFile" accept="audio/*,.mp3,.wav,.ogg,.flac,.m4a" multiple hidden>
-<div id="tbar"><button id="tbStart" title="Previous tape / back to start" aria-label="Previous tape or back to start"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button><button id="tbBack" title="Back 10 seconds" aria-label="Back 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 5v14L3 12z"/><path d="M21 5v14l-9-7z"/></svg></button><button id="tbPlay" title="Play" aria-label="Play"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button><button id="tbPause" title="Pause" aria-label="Pause"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg></button><button id="tbStop" title="Stop" aria-label="Stop"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg></button><button id="tbFwd" title="Forward 10 seconds" aria-label="Forward 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M3 5v14l9-7z"/><path d="M12 5v14l9-7z"/></svg></button><button id="tbNext" title="Next tape" aria-label="Next tape"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 5v14l11-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><button id="tbRepeat" title="Repeat (screensaver)" aria-label="Repeat (screensaver)"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zM17 17H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg></button><button id="tbFs" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button><div id="tbTime">0:00</div></div>
+<div id="tbar"><button id="tbStart" title="Previous tape / back to start" aria-label="Previous tape or back to start"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button><button id="tbBack" title="Back 10 seconds" aria-label="Back 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 5v14L3 12z"/><path d="M21 5v14l-9-7z"/></svg></button><button id="tbPlay" title="Play" aria-label="Play"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button><button id="tbPause" title="Pause" aria-label="Pause"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg></button><button id="tbStop" title="Stop" aria-label="Stop"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg></button><button id="tbFwd" title="Forward 10 seconds" aria-label="Forward 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M3 5v14l9-7z"/><path d="M12 5v14l9-7z"/></svg></button><button id="tbNext" title="Next tape" aria-label="Next tape"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 5v14l11-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><button id="tbRepeat" title="Repeat (screensaver)" aria-label="Repeat (screensaver)"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zM17 17H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg></button><button id="tbFs" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button><div id="tbTime">0:00</div><a id="tbCredit" style="display:none"><span id="tbcText"></span><span class="yt"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="5" width="22" height="14" rx="4" fill="#ff0033"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></span></a></div>
 <div id="fsHint">Esc = exit fullscreen · Space = play/pause · H = show/hide controls</div>
 
 <script>
@@ -425,7 +434,7 @@ function loadLocal() {
     applyLayout(j); saveLocal();
   } else applyLayout(JSON.parse(JSON.stringify(PRESET)));
 }
-function readOpts() { const o = {}; ['Shake', 'Zoom', 'Pulse', 'Dust', 'Grain', 'Vig', 'FsExp', 'Racks'].forEach(k => o[k] = $('opt' + k).checked); o.Frame = parseFloat($('optFrame').value) || 1; return o; }
+function readOpts() { const o = {}; ['Shake', 'Zoom', 'Pulse', 'Dust', 'Grain', 'Vig', 'FsExp', 'Racks', 'RackHide'].forEach(k => o[k] = $('opt' + k).checked); o.Frame = parseFloat($('optFrame').value) || 1; return o; }
 function applyLayout(j) {
   if (Array.isArray(j.zones)) zones = j.zones.filter(z => DEF[z.type]).map(z => Object.assign(DEF[z.type](), z));
   if (j.opts) Object.keys(j.opts).forEach(k => { const el = $('opt' + k); if (!el) return; if (el.type === 'range') { el.value = j.opts[k]; $('frameVal').textContent = Math.round(j.opts[k] * 100) + '%'; } else el.checked = !!j.opts[k]; });
@@ -860,7 +869,7 @@ let drag = null;
 cv.addEventListener('pointerdown', e => {
   { const [lx, ly] = toLogical(e), sl = e.button === 0 ? slotAt(lx, ly) : null;
     if (sl && VIEWER && sl.idx >= TAPES.length) { /* empty slot: nothing for viewers */ }
-    else if (sl) { showBar(); const ic = e.pointerType === 'touch' ? null : iconAt(lx, ly, sl); if (ic === 'dl') { downloadTape(TAPES[sl.idx]); return; } if (ic === 'edit') { openTapeDialog(sl.idx, false); return; } if (ic === 'del') { $('tdForm').dataset.direct = '1'; openTapeDialog(sl.idx, true); return; } $('tdForm').dataset.direct = '0';
+    else if (sl) { showBar(); const ic = e.pointerType === 'touch' ? null : iconAt(lx, ly, sl); if (ic === 'dl') { downloadTape(TAPES[sl.idx]); return; } if (ic === 'yt') { openLink(TAPES[sl.idx].link); return; } if (ic === 'edit') { openTapeDialog(sl.idx, false); return; } if (ic === 'del') { $('tdForm').dataset.direct = '1'; openTapeDialog(sl.idx, true); return; } $('tdForm').dataset.direct = '0';
       if (e.pointerType === 'touch' && !VIEWER && sl.idx < TAPES.length) { LP = setTimeout(() => { LP = 'fired'; openTapeMenu(sl.idx, e.clientX, e.clientY); }, 550); LPIDX = sl.idx; return; }
       if (sl.idx < TAPES.length) { if (sl.idx === curIndex() && S.buf) { S.playing ? pause() : play(); } else loadTape(sl.idx, true); } else if (sl.idx === TAPES.length) $('tapeFile').click(); return; } }
   if (!editing) { clickKeys(e); return; }
@@ -966,7 +975,7 @@ function adminFetch(url, o = {}) {
 }
 function siteBody() {
   return { v: 1, photo: SITE_PHOTO, layout: { v: 4, zones, opts: readOpts() },
-    tapes: TAPES.map(t => ({ id: t.id, title: t.title, artist: t.artist || '', msg: t.msg || '', label: t.label, dur: t.dur || 0, download: t.download !== false, file: t.file || '' })) };
+    tapes: TAPES.map(t => ({ id: t.id, title: t.title, artist: t.artist || '', msg: t.msg || '', link: t.link || '', label: t.label, dur: t.dur || 0, download: t.download !== false, file: t.file || '' })) };
 }
 function saveSite() {
   if (!SITE_API || VIEWER) return;
@@ -997,6 +1006,21 @@ async function adminLogin() {
   }
   return false;
 }
+function cleanLink(v) {
+  v = (v || '').trim(); if (!v) return '';
+  if (!/^https?:\/\//i.test(v)) v = 'https://' + v.replace(/^\/+/, '');
+  try { const u = new URL(v); return (u.protocol === 'https:' || u.protocol === 'http:') ? u.href : ''; } catch (e) { return ''; }
+}
+function openLink(url) { if (!url) return; const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; document.body.appendChild(a); a.click(); a.remove(); }
+function updCredit() {
+  const el = $('tbCredit'), t = TAPES[curIndex()];
+  if (!t) { el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+  $('tbcText').textContent = (t.title || '') + (t.artist ? '  ·  by ' + t.artist : '');
+  if (t.link) { el.href = t.link; el.classList.add('has'); el.title = 'Open ' + (t.artist || 'the creator') + ' on YouTube'; }
+  else { el.removeAttribute('href'); el.classList.remove('has'); el.title = ''; }
+}
+function viewerIcons(t) { const k = []; if (t && t.link) k.push('yt'); if (t && SITE_API && t.download !== false && t.src) k.push('dl'); if (k.length === 1 && k[0] === 'yt') return ['yt']; return k; }
 function downloadTape(t) {
   const a = document.createElement('a'); a.href = t.src + '?dl=1'; a.download = ''; document.body.appendChild(a); a.click(); a.remove();
 }
@@ -1119,10 +1143,18 @@ async function rackRestore() {
 }
 // ---- geometry (frame space, not zoomed with the boombox) ----
 const SLOT_H = 46, RACK_PAD = 14, RACK_CAP = 54;
+let RACK_VIS = 1, rackT = 0;
+function updateRackVis() {
+  const now = performance.now(), dt = Math.min(0.1, (now - (rackT || now)) / 1000); rackT = now;
+  const busy = editing || menuIdx >= 0 || dlgIdx >= 0 || HOVER >= 0 || LOADING;
+  const target = ($('optRackHide').checked && document.body.classList.contains('idle') && !busy) ? 0 : 1;
+  RACK_VIS += (target - RACK_VIS) * (1 - Math.exp(-dt * 5));
+  if (Math.abs(target - RACK_VIS) < 0.001) RACK_VIS = target;
+}
 function rackRects() {
   if (!$('optRacks').checked) return [];
-  const w = 250, h = 840, y = (H - h) / 2;
-  return [{ x: 34, y, w, h, side: 'L', plate: 'TRMZ' }, { x: W - 34 - w, y, w, h, side: 'R', plate: 'OST' }];
+  const w = 250, h = 840, y = (H - h) / 2, e = RACK_VIS * RACK_VIS * (3 - 2 * RACK_VIS), off = (1 - e) * (w + 60);
+  return [{ x: 34 - off, y, w, h, side: 'L', plate: 'TRMZ' }, { x: W - 34 - w + off, y, w, h, side: 'R', plate: 'OST' }];
 }
 function rackSlots(r) { return Math.floor((r.h - RACK_CAP - RACK_PAD * 2) / SLOT_H); }
 function slotRect(r, k) { return { x: r.x + RACK_PAD, y: r.y + RACK_CAP + RACK_PAD + k * SLOT_H, w: r.w - RACK_PAD * 2, h: SLOT_H - 6 }; }
@@ -1187,7 +1219,8 @@ function drawSpine(g, s, t, cur, side) {
   }
 }
 function drawRacks(g) {
-  const rects = rackRects(); if (!rects.length) return;
+  updateRackVis();
+  const rects = rackRects(); if (!rects.length || RACK_VIS < 0.002) return;
   const ci = curIndex(); let base = 0;
   for (const r of rects) {
     drawRackFrame(g, r);
@@ -1233,7 +1266,7 @@ function openTapeDialog(i, confirmDelete) {
   if (VIEWER || MANIFEST) return;
   const t = TAPES[i]; if (!t) return;
   dlgIdx = i; dlgLabel = t.label || 'cream';
-  $('tdTitle').value = t.title || ''; $('tdArtist').value = t.artist || ''; $('tdMsg').value = t.msg || '';
+  $('tdTitle').value = t.title || ''; $('tdArtist').value = t.artist || ''; $('tdMsg').value = t.msg || ''; $('tdLink').value = t.link || '';
   $('tdDlRow').style.display = SITE_API ? 'block' : 'none'; $('tdDl').checked = t.download !== false;
   document.querySelectorAll('#tdlg [data-dc]').forEach(el => el.classList.toggle('on', el.dataset.dc === dlgLabel));
   showDlgPart(confirmDelete ? 'confirm' : 'form');
@@ -1250,7 +1283,7 @@ function showDlgPart(part) {
 function closeTapeDialog() { $('tdlg').classList.remove('open'); dlgIdx = -1; }
 function saveTapeDialog() {
   const t = TAPES[dlgIdx]; if (!t) return closeTapeDialog();
-  t.title = $('tdTitle').value.trim() || t.title; t.artist = $('tdArtist').value.trim(); t.msg = $('tdMsg').value.trim(); t.label = dlgLabel; if (SITE_API) t.download = $('tdDl').checked;
+  t.title = $('tdTitle').value.trim() || t.title; t.artist = $('tdArtist').value.trim(); t.msg = $('tdMsg').value.trim(); t.label = dlgLabel; t.link = cleanLink($('tdLink').value); updCredit(); if (SITE_API) t.download = $('tdDl').checked;
   if (t.id === CURID) { $('title').value = t.title; $('artist').value = t.artist; $('msg').value = t.msg; }
   rackSave(); setStatus(`Saved "${t.title}".`); closeTapeDialog();
 }
@@ -1266,18 +1299,18 @@ $('tdlg').addEventListener('pointerdown', e => { if (e.target.id === 'tdlg') clo
 function spineIcons(sl) {
   const s = slotRect(sl.r, sl.idx - rackBase(sl.r)), dir = sl.r.side === 'L' ? 1 : -1;
   const off = sl.idx === curIndex() ? 22 : 9, x1 = s.x + dir * off + s.w - 13, y = s.y + s.h / 2;
-  return { edit: { x: x1 - 30, y }, del: { x: x1, y }, dl: { x: x1, y } };
+  return { edit: { x: x1 - 30, y }, del: { x: x1, y }, dl: { x: x1, y }, yt: { x: x1 - 30, y } };
 }
 function rackBase(r) { let b = 0; for (const q of rackRects()) { if (q.side === r.side) return b; b += rackSlots(q); } return b; }
 function drawSpineIcons(g) {
   if (HOVER < 0 || HOVER >= TAPES.length || S.exporting || dlgIdx >= 0) return;
-  if (VIEWER && !(SITE_API && TAPES[HOVER].download !== false)) return;
+  if (VIEWER && !viewerIcons(TAPES[HOVER]).length) return;
   let base = 0;
   for (const r of rackRects()) {
     const n = rackSlots(r);
     if (HOVER < base + n) {
       const ic = spineIcons({ r, idx: HOVER });
-      (VIEWER ? [['dl', '⬇', '#2f8f4e']] : [['edit', '✎', '#2a6fc4'], ['del', '✕', '#b8321c']]).forEach(([k, ch, col]) => {
+      (VIEWER ? viewerIcons(TAPES[HOVER]).map(k => k === 'dl' ? ['dl', '⬇', '#2f8f4e'] : ['yt', '▶', '#ff0033']) : [['edit', '✎', '#2a6fc4'], ['del', '✕', '#b8321c']]).forEach(([k, ch, col]) => {
         const p = ic[k], hot = ICON_HOVER === k;
         g.fillStyle = hot ? col : 'rgba(20,14,12,.85)'; g.beginPath(); g.arc(p.x, p.y, 12, 0, 7); g.fill();
         g.strokeStyle = hot ? '#fff' : col; g.lineWidth = 2; g.stroke();
@@ -1292,7 +1325,7 @@ let ICON_HOVER = null;
 function iconAt(lx, ly, sl) {
   if (!sl || sl.idx >= TAPES.length) return null;
   const ic = spineIcons(sl);
-  const keys = VIEWER ? (SITE_API && TAPES[sl.idx].download !== false ? ['dl'] : []) : ['edit', 'del'];
+  const keys = VIEWER ? viewerIcons(TAPES[sl.idx]) : ['edit', 'del'];
   for (const k of keys) if (Math.hypot(ic[k].x - lx, ic[k].y - ly) < 15) return k;
   return null;
 }
@@ -1305,7 +1338,7 @@ function nudge(sec) { if (!S.buf) return; seekTo(clamp(curTime() + sec, 0, S.buf
 function showBar() {
   const b = $('tbar'); b.classList.remove('hide'); document.body.classList.remove('idle');
   clearTimeout(barT);
-  barT = setTimeout(() => { if (b.matches(':hover')) return showBar(); b.classList.add('hide'); document.body.classList.add('idle'); if (b.contains(document.activeElement)) document.activeElement.blur(); }, 3500);
+  barT = setTimeout(() => { if (b.matches(':hover') || HOVER >= 0 || menuIdx >= 0 || dlgIdx >= 0) return showBar(); b.classList.add('hide'); document.body.classList.add('idle'); if (b.contains(document.activeElement)) document.activeElement.blur(); }, 3500);
 }
 async function wakeLock(on) {
   try {
@@ -1395,6 +1428,7 @@ function updUI() {
   $('tbPlay').classList.toggle('on', S.playing); $('tbPause').classList.toggle('on', paused);
   $('tbRepeat').classList.toggle('on', REPEAT);
   wakeLock(S.playing);
+  updCredit();
 }
 async function loadAudio(file) {
   if (!file || S.exporting) return;
