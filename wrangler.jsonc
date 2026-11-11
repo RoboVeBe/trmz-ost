@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trmz-ost",
+  "main": "src/worker.js",
+  "compatibility_date": "2025-09-01",
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true },
+  "r2_buckets": [{ "binding": "BUCKET", "bucket_name": "trmz-ost" }],
+  "routes": [{ "pattern": "ost.trmz.app", "custom_domain": true }],
+  // ACCESS_TEAM, ACCESS_AUD, ADMIN_EMAIL (and/or the ADMIN_PASSWORD secret) are set in the Cloudflare dashboard
+  "keep_vars": true,
+  "observability": { "enabled": true }
+}
