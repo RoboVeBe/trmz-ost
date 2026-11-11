@@ -24,7 +24,6 @@
   #editRow{display:none}
   body.editing #editRow{display:flex}
   body.clean #ui,body.clean #panel{opacity:0;pointer-events:none}
-  body.clean{cursor:none}
   #panel{position:fixed;right:12px;bottom:12px;width:270px;max-height:55vh;overflow:auto;background:rgba(14,10,12,.92);border:1px solid #3a2a26;border-radius:12px;padding:10px 12px;z-index:6;display:none;font-size:13px}
   body.editing #panel{display:block}
   #panel h4{margin:2px 0 8px;color:#ffb380;font-size:14px}
@@ -91,6 +90,49 @@
   #pwdlg h3{margin:0 0 12px;color:#ffb380}
   #pwdlg input{width:100%;box-sizing:border-box;background:#1d1517;border:1px solid #4a3530;color:#f3e3d0;border-radius:7px;padding:9px}
   #pwdlg .btns{display:flex;gap:8px;margin-top:14px}
+
+  /* ---- tape list / playlist ---- */
+  #plist{position:fixed;top:0;right:0;bottom:0;width:min(440px,92vw);background:rgba(16,11,9,.97);border-left:1px solid #4a3020;z-index:9;transform:translateX(105%);transition:transform .35s ease;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.6)}
+  #plist.open{transform:translateX(0)}
+  .plHead{display:flex;align-items:center;gap:8px;padding:14px 14px 8px}
+  .plTabs{display:flex;gap:6px;flex:1}
+  .plTabs button{flex:1;padding:12px 10px;font-size:15px;border-radius:12px}
+  .plTabs button.on{background:#e0703a;color:#1a0d08;border-color:#ffb380}
+  #plClose{width:46px;height:46px;font-size:18px;border-radius:12px}
+  .plBar{display:flex;align-items:center;gap:10px;padding:4px 14px 10px}
+  #plPlay{padding:12px 16px;font-size:15px;border-radius:12px}
+  #plHint{color:#a08a80;font-size:13px}
+  #plRows{flex:1;overflow-y:auto;padding:0 10px 20px;-webkit-overflow-scrolling:touch}
+  .plRow{display:flex;align-items:center;gap:10px;min-height:58px;padding:6px 8px;margin:5px 0;border-radius:12px;background:#1f1512;border:1px solid #3a2a22;cursor:pointer;user-select:none;-webkit-user-select:none;outline:none}
+  .plRow:hover{background:#2a1c16}
+  .plRow:focus-visible{outline:3px solid #ffb347;outline-offset:2px}
+  .plRow.cur{border-color:#e0703a;background:#2e1c12;box-shadow:0 0 18px rgba(255,138,58,.25)}
+  .plRow.dragging{opacity:.85;transform:scale(1.02);box-shadow:0 10px 30px rgba(0,0,0,.6);border-color:#ffb347;z-index:2;position:relative}
+  .plDrag{touch-action:none;cursor:grab;font-size:24px;color:#a08a80;padding:8px 6px;line-height:1}
+  .plLab{width:34px;height:24px;border-radius:4px;flex:none}
+  .plTxt{flex:1;min-width:0;display:flex;flex-direction:column}
+  .plTxt b{font:700 16px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;color:#f3e3d0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .plTxt small{color:#c9a98e;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .plRow.cur .plTxt b::before{content:'▶ ';color:#ff8a3a}
+  .plRow.cur:not(.playing) .plTxt b::before{content:'❚❚ ';color:#b06a3a}
+  .plDur{color:#a08a80;font-size:13px;font-variant-numeric:tabular-nums}
+  .plBtn{width:44px;height:44px;flex:none;border-radius:12px;padding:0;font-size:17px;display:flex;align-items:center;justify-content:center}
+  .plAdd.on{background:#2f5a3a;border-color:#4f9a62;color:#d8ffe0}
+  .plYt{color:#fff;background:#b8002a;border-color:#ff3355}
+  .plDl{color:#d8ffe0;background:#245233;border-color:#3f8a55}
+  .plEmpty{color:#a08a80;padding:24px 10px;text-align:center;font-size:15px}
+  body.exporting #plist{display:none}
+  /* ---- portrait phones / tablets ---- */
+  body.portrait{height:auto;min-height:100%}
+  body.portrait #stage{position:relative;inset:auto;display:block}
+  body.portrait #tbar{position:static;transform:none;margin:10px auto 6px;width:max-content;max-width:calc(100vw - 16px);flex-wrap:wrap;justify-content:center;opacity:1!important}
+  body.portrait #tbar.hide{opacity:1;transform:none}
+  body.portrait #tbFs,body.portrait #tbList{display:none}
+  body.portrait #plist{position:static;transform:none;width:auto;max-width:760px;margin:0 auto 40px;border:0;box-shadow:none;background:transparent}
+  body.portrait #plClose{display:none}
+  body.portrait #plRows{overflow:visible}
+  @media (max-width:520px){ #tbar #tbBack,#tbar #tbFwd{display:none} #tbar button{width:56px;height:56px} }
+  @media (max-width:430px){ .plDur{display:none} .plLab{width:22px} .plBtn{width:40px;height:40px} }
   #expStatus{position:fixed;left:14px;bottom:14px;background:rgba(0,0,0,.75);color:#ff9b6a;padding:6px 10px;border-radius:8px;font-size:13px;display:none;z-index:7}
 </style>
 </head>
@@ -158,6 +200,7 @@
 <div id="panel"><h4>Zones</h4><div id="zlist"></div><div id="props"></div></div>
 <div id="drop">Drop a photo or a song</div>
 <div id="expStatus"></div>
+<div id="plist" aria-label="Tapes"><div class="plHead"><div class="plTabs"><button id="plAll" class="on">All tapes <span id="plAllN"></span></button><button id="plMine">My playlist <span id="plMineN"></span></button></div><button id="plClose" aria-label="Close">✕</button></div><div class="plBar"><button id="plPlay" class="hot">▶ Play all</button><span id="plHint"></span></div><div id="plRows"></div></div>
 <div id="pwdlg"><div class="box"><h3 id="pwMsg">Admin sign-in</h3><input type="password" id="pwIn" placeholder="Admin password"><div class="btns"><span style="flex:1"></span><button id="pwCancel">Cancel</button><button id="pwGo" class="hot">Sign in</button></div></div></div>
 <button id="exitPrev">Exit viewer preview</button>
 <div id="tdlg"><div class="box">
@@ -182,7 +225,7 @@
   <button data-a="up">↑ Move up</button><button data-a="down">↓ Move down</button>
   <button data-a="del" class="danger">🗑 Remove tape…</button></div>
 <input type="file" id="tapeFile" accept="audio/*,.mp3,.wav,.ogg,.flac,.m4a" multiple hidden>
-<div id="tbar"><button id="tbStart" title="Previous tape / back to start" aria-label="Previous tape or back to start"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button><button id="tbBack" title="Back 10 seconds" aria-label="Back 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 5v14L3 12z"/><path d="M21 5v14l-9-7z"/></svg></button><button id="tbPlay" title="Play" aria-label="Play"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button><button id="tbPause" title="Pause" aria-label="Pause"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg></button><button id="tbStop" title="Stop" aria-label="Stop"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg></button><button id="tbFwd" title="Forward 10 seconds" aria-label="Forward 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M3 5v14l9-7z"/><path d="M12 5v14l9-7z"/></svg></button><button id="tbNext" title="Next tape" aria-label="Next tape"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 5v14l11-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><button id="tbRepeat" title="Repeat (screensaver)" aria-label="Repeat (screensaver)"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zM17 17H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg></button><button id="tbFs" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button><div id="tbTime">0:00</div><a id="tbCredit" style="display:none"><span id="tbcText"></span><span class="yt"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="5" width="22" height="14" rx="4" fill="#ff0033"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></span></a></div>
+<div id="tbar"><button id="tbStart" title="Previous tape / back to start" aria-label="Previous tape or back to start"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button><button id="tbBack" title="Back 10 seconds" aria-label="Back 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 5v14L3 12z"/><path d="M21 5v14l-9-7z"/></svg></button><button id="tbPlay" title="Play" aria-label="Play"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button><button id="tbPause" title="Pause" aria-label="Pause"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg></button><button id="tbStop" title="Stop" aria-label="Stop"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg></button><button id="tbFwd" title="Forward 10 seconds" aria-label="Forward 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M3 5v14l9-7z"/><path d="M12 5v14l9-7z"/></svg></button><button id="tbNext" title="Next tape" aria-label="Next tape"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 5v14l11-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><button id="tbList" title="Tapes &amp; playlist" aria-label="Tapes and playlist"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="3" y="5" width="3" height="3"/><rect x="8" y="5" width="13" height="3"/><rect x="3" y="10.5" width="3" height="3"/><rect x="8" y="10.5" width="13" height="3"/><rect x="3" y="16" width="3" height="3"/><rect x="8" y="16" width="13" height="3"/></svg></button><button id="tbRepeat" title="Repeat (screensaver)" aria-label="Repeat (screensaver)"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zM17 17H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg></button><button id="tbFs" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button><div id="tbTime">0:00</div><a id="tbCredit" style="display:none"><span id="tbcText"></span><span class="yt"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="5" width="22" height="14" rx="4" fill="#ff0033"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></span></a></div>
 <div id="fsHint">Esc = exit fullscreen · Space = play/pause · H = show/hide controls</div>
 
 <script>
@@ -822,7 +865,7 @@ function render() {
   const o = readOpts(), env = d ? d.env : 0;
   let zm = 1, sx = 0, sy = 0;
   if (!editing) {
-    zm *= o.Frame || 1;
+    zm *= compactMode() ? 1.02 : (o.Frame || 1);
     if (o.Zoom && dur) zm *= 1 + 0.05 * clamp(t / dur, 0, 1);
     if (o.Shake) { zm *= 1.012 + 0.006 * env * env; sx = (hash(f * 1.7) - .5) * 8 * env * env; sy = (hash(f * 2.3) - .5) * 6 * env * env; }
   }
@@ -871,7 +914,7 @@ cv.addEventListener('pointerdown', e => {
     if (sl && VIEWER && sl.idx >= TAPES.length) { /* empty slot: nothing for viewers */ }
     else if (sl) { showBar(); const ic = e.pointerType === 'touch' ? null : iconAt(lx, ly, sl); if (ic === 'dl') { downloadTape(TAPES[sl.idx]); return; } if (ic === 'yt') { openLink(TAPES[sl.idx].link); return; } if (ic === 'edit') { openTapeDialog(sl.idx, false); return; } if (ic === 'del') { $('tdForm').dataset.direct = '1'; openTapeDialog(sl.idx, true); return; } $('tdForm').dataset.direct = '0';
       if (e.pointerType === 'touch' && !VIEWER && sl.idx < TAPES.length) { LP = setTimeout(() => { LP = 'fired'; openTapeMenu(sl.idx, e.clientX, e.clientY); }, 550); LPIDX = sl.idx; return; }
-      if (sl.idx < TAPES.length) { if (sl.idx === curIndex() && S.buf) { S.playing ? pause() : play(); } else loadTape(sl.idx, true); } else if (sl.idx === TAPES.length) $('tapeFile').click(); return; } }
+      if (sl.idx < TAPES.length) { if (sl.idx === curIndex() && S.buf) { S.playing ? pause() : play(); } else { PLAYSRC = 'all'; loadTape(sl.idx, true); } } else if (sl.idx === TAPES.length) $('tapeFile').click(); return; } }
   if (!editing) { clickKeys(e); return; }
   const [x, y] = toLogical(e), hr = 14 * W / cv.getBoundingClientRect().width;
   for (let i = zones.length - 1; i >= 0; i--) {
@@ -960,6 +1003,7 @@ const LABEL_KEYS = Object.keys(LABEL_C);
 function curIndex() { return TAPES.findIndex(t => t.id === CURID); }
 function rackSave() {
   try { localStorage.setItem('trmzbb.cur', CURID || ''); } catch (e) {}
+  renderList();
   if (MANIFEST) return;
   if (SITE_API) { if (!VIEWER) saveSite(); return; }
   idbSet('tapes', TAPES.map(t => ({ ...t })));
@@ -1076,17 +1120,20 @@ async function loadTape(i, autoplay, force) {
   return ok;
 }
 function nextTape(dir) {
-  const i = curIndex(); if (TAPES.length < 1) return;
-  let n = i < 0 ? 0 : i + dir;
-  if (n >= TAPES.length) n = 0; if (n < 0) n = TAPES.length - 1;
-  loadTape(n, true);
+  const order = playOrder(); if (!order.length) return;
+  let p = order.indexOf(curIndex());
+  p = p < 0 ? 0 : (p + dir + order.length) % order.length;
+  loadTape(order[p], true);
 }
 function onTrackEnd() {
   setTimeout(() => {
     if (S.playing || S.exporting || LOADING || !S.buf || S.offset < S.buf.duration - 0.05) return;
-    const i = curIndex();
-    if (TAPES.length > 1 && i >= 0) { if (i + 1 < TAPES.length) loadTape(i + 1, true); else if (REPEAT) loadTape(0, true); }
-    else if (REPEAT) { S.offset = 0; play(); }
+    const order = playOrder(), p = order.indexOf(curIndex());
+    if (order.length > 1 || (order.length === 1 && p < 0)) {
+      if (p < 0) loadTape(order[0], true);
+      else if (p + 1 < order.length) loadTape(order[p + 1], true);
+      else if (REPEAT) loadTape(order[0], true);
+    } else if (REPEAT) { S.offset = 0; play(); }
   }, 1800);
 }
 async function removeTape(i) {
@@ -1152,7 +1199,7 @@ function updateRackVis() {
   if (Math.abs(target - RACK_VIS) < 0.001) RACK_VIS = target;
 }
 function rackRects() {
-  if (!$('optRacks').checked) return [];
+  if (!$('optRacks').checked || compactMode()) return [];
   const w = 250, h = 840, y = (H - h) / 2, e = RACK_VIS * RACK_VIS * (3 - 2 * RACK_VIS), off = (1 - e) * (w + 60);
   return [{ x: 34 - off, y, w, h, side: 'L', plate: 'TRMZ' }, { x: W - 34 - w + off, y, w, h, side: 'R', plate: 'OST' }];
 }
@@ -1330,6 +1377,99 @@ function iconAt(lx, ly, sl) {
   return null;
 }
 
+
+/* ================= tape list + playlists (touch & TV friendly) ================= */
+let PLTAB = 'all', PLAYSRC = 'all', MY = [], DRAG2 = null;
+try { MY = JSON.parse(localStorage.getItem('trmzbb.my') || '[]'); if (!Array.isArray(MY)) MY = []; } catch (e) { MY = []; }
+try { PLAYSRC = localStorage.getItem('trmzbb.src') === 'mine' ? 'mine' : 'all'; } catch (e) {}
+function saveMy() { try { localStorage.setItem('trmzbb.my', JSON.stringify(MY)); localStorage.setItem('trmzbb.src', PLAYSRC); } catch (e) {} }
+function isPortrait() { return innerHeight > innerWidth; }
+function compactMode() { return isPortrait() || innerWidth < 1000; }
+function myIdx() { return MY.map(id => TAPES.findIndex(t => t.id === id)).filter(i => i >= 0); }
+function playOrder() { if (PLAYSRC === 'mine') { const o = myIdx(); if (o.length) return o; } return TAPES.map((_, i) => i); }
+function isBackKey(e) { return e.key === 'Escape' || e.key === 'GoBack' || e.key === 'BrowserBack' || e.keyCode === 461 || e.keyCode === 10009 || (e.key === 'Backspace' && !(e.target && e.target.tagName === 'INPUT')); }
+function openList(focusCur) {
+  $('plist').classList.add('open'); renderList(); showBar();
+  if (focusCur) setTimeout(() => { const el = $('plRows').querySelector('.plRow.cur') || $('plRows').querySelector('.plRow') || $('plPlay'); el && el.focus(); el && el.scrollIntoView && el.scrollIntoView({ block: 'nearest' }); }, 60);
+}
+function closeList() { $('plist').classList.remove('open'); const b = $('tbList'); if (b && !isPortrait()) b.focus(); }
+function renderList() {
+  const box = $('plRows'); if (!box || DRAG2) return;
+  const ae = document.activeElement, focusId = ae && ae.closest && ae.closest('.plRow') ? ae.closest('.plRow').dataset.id : null;
+  const mine = myIdx();
+  $('plAllN').textContent = TAPES.length ? '(' + TAPES.length + ')' : ''; $('plMineN').textContent = mine.length ? '(' + mine.length + ')' : '';
+  $('plAll').classList.toggle('on', PLTAB === 'all'); $('plMine').classList.toggle('on', PLTAB === 'mine');
+  const idxs = PLTAB === 'all' ? TAPES.map((_, i) => i) : mine;
+  const canDrag = PLTAB === 'mine' || (!VIEWER && !MANIFEST);
+  $('plPlay').textContent = PLTAB === 'all' ? '▶ Play all' : '▶ Play my playlist';
+  $('plPlay').disabled = !idxs.length;
+  $('plHint').textContent = PLTAB === 'mine' ? (idxs.length ? 'Drag ≡ to change the order' : '') : (canDrag ? 'Drag ≡ to reorder the rack' : 'Tap ＋ to add to your playlist');
+  box.innerHTML = '';
+  if (!idxs.length) { const d = document.createElement('div'); d.className = 'plEmpty'; d.textContent = PLTAB === 'mine' ? 'Your playlist is empty. Open "All tapes" and tap ＋ on the songs you want.' : 'No tapes yet.'; box.appendChild(d); return; }
+  const ci = curIndex();
+  for (const ti of idxs) {
+    const t = TAPES[ti], L = LABEL_C[t.label] || LABEL_C.cream, inMine = MY.includes(t.id);
+    const row = document.createElement('div');
+    row.className = 'plRow' + (ti === ci ? ' cur' : '') + (ti === ci && S.playing ? ' playing' : '');
+    row.tabIndex = 0; row.dataset.id = t.id; row.setAttribute('role', 'button');
+    row.innerHTML = (canDrag ? '<span class="plDrag" title="Drag to reorder">≡</span>' : '') +
+      `<span class="plLab" style="background:${L[0]};border-left:6px solid ${L[1]}"></span><span class="plTxt"><b></b><small></small></span><span class="plDur"></span>` +
+      (PLTAB === 'all' ? `<button class="plBtn plAdd${inMine ? ' on' : ''}" tabindex="-1" title="${inMine ? 'In your playlist (tap to remove)' : 'Add to my playlist'}">${inMine ? '✓' : '＋'}</button>` : '<button class="plBtn plRem" tabindex="-1" title="Remove from my playlist">✕</button>') +
+      (t.link ? '<button class="plBtn plYt" tabindex="-1" title="Creator on YouTube">▶</button>' : '') +
+      (SITE_API && t.download !== false && t.src ? '<button class="plBtn plDl" tabindex="-1" title="Download">⬇</button>' : '');
+    row.querySelector('b').textContent = t.title || t.file || 'Untitled';
+    row.querySelector('small').textContent = t.artist ? 'by ' + t.artist : '';
+    row.querySelector('.plDur').textContent = t.dur ? fmt(t.dur) : '';
+    box.appendChild(row);
+  }
+  if (focusId) { const el = [...box.querySelectorAll('.plRow')].find(r => r.dataset.id === focusId); if (el) el.focus({ preventScroll: true }); }
+}
+$('plAll').onclick = () => { PLTAB = 'all'; renderList(); };
+$('plMine').onclick = () => { PLTAB = 'mine'; renderList(); };
+$('plClose').onclick = closeList;
+$('tbList').onclick = () => $('plist').classList.contains('open') ? closeList() : openList(false);
+$('plPlay').onclick = () => {
+  PLAYSRC = PLTAB; saveMy();
+  const order = playOrder(); if (!order.length) return;
+  loadTape(order[0], true);
+};
+$('plRows').addEventListener('click', e => {
+  if (DRAG2 || e.target.closest('.plDrag')) return;
+  const row = e.target.closest('.plRow'); if (!row) return;
+  const ti = TAPES.findIndex(t => t.id === row.dataset.id); if (ti < 0) return; const t = TAPES[ti];
+  if (e.target.closest('.plAdd')) { if (MY.includes(t.id)) MY = MY.filter(x => x !== t.id); else MY.push(t.id); saveMy(); renderList(); return; }
+  if (e.target.closest('.plRem')) { MY = MY.filter(x => x !== t.id); saveMy(); renderList(); return; }
+  if (e.target.closest('.plYt')) { openLink(t.link); return; }
+  if (e.target.closest('.plDl')) { downloadTape(t); return; }
+  PLAYSRC = PLTAB; saveMy();
+  if (ti === curIndex() && S.buf) { S.playing ? pause() : play(); } else loadTape(ti, true);
+});
+// drag to reorder (mouse, finger or pen)
+$('plRows').addEventListener('pointerdown', e => {
+  const h = e.target.closest('.plDrag'); if (!h) return;
+  e.preventDefault();
+  const row = h.closest('.plRow'); DRAG2 = { id: row.dataset.id, row };
+  row.classList.add('dragging'); try { h.setPointerCapture(e.pointerId); } catch (err) {}
+});
+$('plRows').addEventListener('pointermove', e => {
+  if (!DRAG2) return; e.preventDefault();
+  const box = $('plRows'), others = [...box.querySelectorAll('.plRow')].filter(r => r !== DRAG2.row);
+  let ref = null; for (const r of others) { const rc = r.getBoundingClientRect(); if (e.clientY < rc.top + rc.height / 2) { ref = r; break; } }
+  if (DRAG2.row.nextSibling !== ref) box.insertBefore(DRAG2.row, ref);
+  const bx = box.getBoundingClientRect(), edge = 70;
+  if (box.scrollHeight > box.clientHeight) { if (e.clientY < bx.top + edge) box.scrollBy(0, -14); else if (e.clientY > bx.bottom - edge) box.scrollBy(0, 14); }
+  else { if (e.clientY < edge) window.scrollBy(0, -14); else if (e.clientY > innerHeight - edge) window.scrollBy(0, 14); }
+});
+function endDrag2() {
+  if (!DRAG2) return;
+  const ids = [...$('plRows').querySelectorAll('.plRow')].map(r => r.dataset.id);
+  DRAG2.row.classList.remove('dragging'); DRAG2 = null;
+  if (PLTAB === 'mine') { MY = ids; saveMy(); renderList(); }
+  else { const m = new Map(TAPES.map(t => [t.id, t])); TAPES = ids.map(id => m.get(id)).filter(Boolean); rackSave(); }
+}
+$('plRows').addEventListener('pointerup', endDrag2);
+$('plRows').addEventListener('pointercancel', endDrag2);
+
 /* ================= transport controls (TV friendly) ================= */
 let CAM = { zm: 1, sx: 0, sy: 0 }, MOMENT = null, REPEAT = true, barT = 0, WL = null;
 try { REPEAT = localStorage.getItem('trmzbb.repeat') !== '0'; } catch (e) {}
@@ -1429,6 +1569,7 @@ function updUI() {
   $('tbRepeat').classList.toggle('on', REPEAT);
   wakeLock(S.playing);
   updCredit();
+  renderList();
 }
 async function loadAudio(file) {
   if (!file || S.exporting) return;
@@ -1480,6 +1621,17 @@ $('saveBtn').onclick = () => lastExport && offerFile(lastExport.filename, lastEx
 addEventListener('keydown', e => {
   if ($('tdlg').classList.contains('open')) { if (e.key === 'Escape') closeTapeDialog(); else if (e.key === 'Enter' && $('tdForm').style.display !== 'none') { e.preventDefault(); saveTapeDialog(); } return; }
   if (e.target.tagName === 'INPUT' && (e.target.type === 'text' || e.target.type === 'number')) return;
+  const ae = document.activeElement, inList = ae && ae.closest && ae.closest('#plist');
+  if (inList && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+    e.preventDefault(); showBar();
+    const rows = [...$('plRows').querySelectorAll('.plRow')], r = ae.closest('.plRow'), k = r ? rows.indexOf(r) + (e.key === 'ArrowDown' ? 1 : -1) : (e.key === 'ArrowDown' ? 0 : -1);
+    if (k < 0) $('plPlay').focus(); else if (rows[k]) { rows[k].focus(); rows[k].scrollIntoView({ block: 'nearest' }); }
+    return;
+  }
+  if (inList && e.key === 'Enter' && ae.classList.contains('plRow')) { e.preventDefault(); ae.click(); return; }
+  if (isBackKey(e) && $('plist').classList.contains('open')) { e.preventDefault(); closeList(); return; }
+  const noFocus = !ae || ae === document.body || ae === cv || ae === document.documentElement;
+  if ((e.key === 'ArrowUp' && ae && ae.closest && ae.closest('#tbar') || ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && noFocus)) && !isPortrait() && !editing && !S.exporting) { e.preventDefault(); openList(true); return; }
   const onBtn = e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT';
   const barHidden = $('tbar').classList.contains('hide');
   if (!S.exporting) showBar();
@@ -1493,9 +1645,9 @@ addEventListener('keydown', e => {
   if (e.key === 'MediaFastForward') nudge(30);
   if (e.key === 'Escape') closeTapeMenu();
   if (e.key === 'MediaRewind') nudge(-30);
-  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !S.exporting && !editing) {
+  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !S.exporting && !editing && !inList) {
     const btns = [...document.querySelectorAll('#tbar button:not(:disabled)')], i = btns.indexOf(document.activeElement);
-    if (barHidden && i < 0) { e.preventDefault(); $('tbPlay').disabled ? btns[0] && btns[0].focus() : (S.playing ? $('tbPause') : $('tbPlay')).focus(); }
+    if ((barHidden || noFocus) && i < 0) { e.preventDefault(); $('tbPlay').disabled ? btns[0] && btns[0].focus() : (S.playing ? $('tbPause') : $('tbPlay')).focus(); }
     else if (i >= 0) { e.preventDefault(); btns[(i + (e.key === 'ArrowRight' ? 1 : btns.length - 1)) % btns.length].focus(); }
   }
   if (e.key === 'Enter' && !onBtn && e.target.tagName !== 'INPUT') { if (S.buf && !S.exporting) S.playing ? pause() : play(); }
@@ -1509,7 +1661,14 @@ addEventListener('dragleave', () => { dragN--; if (dragN <= 0) document.body.cla
 addEventListener('dragover', e => e.preventDefault());
 addEventListener('drop', e => { e.preventDefault(); dragN = 0; document.body.classList.remove('dragging'); if (VIEWER) return; const fs = [...e.dataTransfer.files], au = fs.filter(isAudio); fs.filter(f => !isAudio(f)).forEach(handleFile); if (au.length) addTapes(au, au.length === 1); });
 function sizeCanvas() { cv.width = W * SCALE; cv.height = H * SCALE; buildBG(); fit(); }
-function fit() { const s = Math.min(innerWidth / 16, innerHeight / 9); cv.style.width = s * 16 + 'px'; cv.style.height = s * 9 + 'px'; }
+function fit() {
+  if ($('tbar').previousElementSibling !== $('stage')) { $('stage').after($('tbar')); $('tbar').after($('plist')); }
+  const P = isPortrait();
+  document.body.classList.toggle('portrait', P);
+  document.documentElement.style.overflow = P ? 'auto' : 'hidden'; document.body.style.overflow = P ? 'auto' : 'hidden';
+  if (P) { const w = innerWidth; cv.style.width = w + 'px'; cv.style.height = w * 9 / 16 + 'px'; }
+  else { const s = Math.min(innerWidth / 16, innerHeight / 9); cv.style.width = s * 16 + 'px'; cv.style.height = s * 9 + 'px'; }
+}
 addEventListener('resize', fit);
 
 /* ================= saving files ================= */
