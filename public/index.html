@@ -37,28 +37,44 @@
   body.dragging #drop{display:flex}
   #fsHint{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:rgba(0,0,0,.7);color:#ffd9b0;padding:8px 14px;border-radius:8px;font-size:14px;z-index:8;opacity:0;pointer-events:none;transition:opacity .6s}
   #fsHint.show{opacity:1}
-  #tbar{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);display:flex;gap:12px;align-items:center;padding:12px 16px;background:rgba(12,8,8,.74);backdrop-filter:blur(8px);border:1px solid rgba(255,190,140,.2);border-radius:20px;z-index:7;transition:opacity .45s,transform .45s;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+  #tbar{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);display:flex;gap:8px;align-items:center;padding:10px 16px;background:rgba(12,8,8,.66);backdrop-filter:blur(8px);border:1px solid rgba(255,190,140,.14);border-radius:40px;z-index:7;transition:opacity .45s,transform .45s;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+  #tbar [hidden]{display:none!important}
+  #tbar button{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;border:0;color:#ffd9b0;padding:0;flex:none}
+  #tbar button:hover{background:rgba(255,190,140,.12)}
+  #tbar button:focus-visible{outline:3px solid #ffb347;outline-offset:2px}
+  #tbar button:disabled{opacity:.3}
+  #tbar button.big{width:64px;height:64px;background:linear-gradient(#ff8a4a,#c4501f);color:#1a0d08;box-shadow:0 4px 18px rgba(255,120,50,.35)}
+  #tbar button.big:hover{background:linear-gradient(#ffa060,#d4602a)}
+  #tbar button.mini{width:40px;height:40px;opacity:.6}
+  #tbar button.mini:hover{opacity:1}
+  #tbar button.mini.on{opacity:1;color:#ff8a4a}
+  #tbList{display:none!important}
+  body.compact:not(.portrait) #tbList{display:flex!important}
+  #tbInfo{width:380px;display:flex;flex-direction:column;gap:8px;padding:0 8px;min-width:0}
+  .tbRow{display:flex;justify-content:space-between;align-items:center;gap:12px;min-width:0}
+  #tbCredit{display:flex;align-items:center;gap:6px;min-width:0;color:#ffcf9a;font:600 14px system-ui;text-decoration:none}
+  #tbcText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #tbCredit .yt{display:none;flex:none}
+  #tbCredit.has{cursor:pointer}
+  #tbCredit.has:hover{color:#fff;text-decoration:underline}
+  #tbCredit.has .yt{display:inline-flex}
+  #tbTime{color:#a08a80;font:600 13px system-ui;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
+  #tbProg{position:relative;height:6px;border-radius:3px;background:rgba(255,255,255,.12);cursor:pointer;touch-action:none}
+  #tbProg::before{content:'';position:absolute;left:0;right:0;top:-10px;bottom:-10px}
+  #tbProgFill{height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#c4501f,#ff8a4a)}
+  body.idle,body.idle canvas{cursor:none}
+  body.editing #tbar,body.exporting #tbar{display:none}
+  body.portrait #tbar{position:static;transform:none;margin:10px auto 6px;width:calc(100vw - 20px);max-width:760px;box-sizing:border-box;flex-wrap:wrap;justify-content:center;opacity:1!important}
+  body.portrait #tbar.hide{opacity:1;transform:none}
+  body.portrait #tbInfo{order:-1;width:100%;padding:2px 4px 6px}
+  body.portrait #tbFs{display:none}
   #tbar.hide{opacity:.14}
   #tbar.hide:hover,#tbar.hide:focus-within{opacity:1}
   body.idle:not(.clean) #ui{opacity:.15}
   body.idle:not(.clean) #ui:hover,body.idle:not(.clean) #ui:focus-within{opacity:1}
   #ui{transition:opacity .45s}
-  #tbar button{width:68px;height:68px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:linear-gradient(#3a2a24,#1e1512);border:1px solid #6b4430;color:#ffd9b0;padding:0}
-  #tbar button:hover{background:linear-gradient(#4d362c,#2a1d18)}
-  #tbar button:focus-visible{outline:4px solid #ffb347;outline-offset:3px}
-  #tbar button.on{background:linear-gradient(#ff8a4a,#c4501f);color:#1a0d08;border-color:#ffb380}
-  #tbar button:disabled{opacity:.35}
-  #tbCredit{display:flex;align-items:center;gap:8px;max-width:340px;padding:8px 12px;border-radius:12px;color:#ffcf9a;font:600 15px system-ui;text-decoration:none;border:1px solid transparent}
-  #tbCredit span#tbcText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  #tbCredit .yt{display:none}
-  #tbCredit.has{cursor:pointer;border-color:#6b4430;background:rgba(255,0,51,.08)}
-  #tbCredit.has:hover{background:rgba(255,0,51,.2);color:#fff}
-  #tbCredit.has .yt{display:inline-flex}
-  @media (max-width:1100px){#tbCredit{display:none!important}}
-  #tbTime{min-width:110px;text-align:center;color:#ffcf9a;font:600 18px system-ui;font-variant-numeric:tabular-nums}
   body.idle,body.idle canvas{cursor:none}
   body.editing #tbar,body.exporting #tbar{display:none}
-  @media (max-width:700px){#tbar{gap:6px;padding:8px}#tbar button{width:44px;height:44px}#tbTime{display:none}}
   #tmenu{position:fixed;display:none;z-index:20;min-width:250px;background:rgba(20,13,10,.97);border:1px solid #6b4430;border-radius:12px;padding:8px;box-shadow:0 12px 40px rgba(0,0,0,.6)}
   #tmenu .tmTitle{font:700 14px "Segoe Print","Comic Sans MS",cursive;color:#ffcf9a;padding:4px 8px 8px;border-bottom:1px solid #3a2a26;margin-bottom:6px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   #tmenu button{display:block;width:100%;text-align:left;margin:2px 0;background:transparent;border:0;padding:8px 10px;border-radius:8px}
@@ -97,6 +113,9 @@
   .plHead{display:flex;align-items:center;gap:8px;padding:14px 14px 8px}
   .plTabs{display:flex;gap:6px;flex:1}
   .plTabs button{flex:1;padding:12px 10px;font-size:15px;border-radius:12px}
+  .plTitle{font:800 20px Georgia,serif;color:#f3d58a;letter-spacing:1px;padding:8px 4px}
+  .plTitle span{font:600 14px system-ui;color:#a08a80}
+  #plReset{margin-left:auto;padding:8px 12px;border-radius:10px;font-size:13px}
   .plTabs button.on{background:#e0703a;color:#1a0d08;border-color:#ffb380}
   #plClose{width:46px;height:46px;font-size:18px;border-radius:12px}
   .plBar{display:flex;align-items:center;gap:10px;padding:4px 14px 10px}
@@ -125,13 +144,9 @@
   /* ---- portrait phones / tablets ---- */
   body.portrait{height:auto;min-height:100%}
   body.portrait #stage{position:relative;inset:auto;display:block}
-  body.portrait #tbar{position:static;transform:none;margin:10px auto 6px;width:max-content;max-width:calc(100vw - 16px);flex-wrap:wrap;justify-content:center;opacity:1!important}
-  body.portrait #tbar.hide{opacity:1;transform:none}
-  body.portrait #tbFs,body.portrait #tbList{display:none}
   body.portrait #plist{position:static;transform:none;width:auto;max-width:760px;margin:0 auto 40px;border:0;box-shadow:none;background:transparent}
   body.portrait #plClose{display:none}
   body.portrait #plRows{overflow:visible}
-  @media (max-width:520px){ #tbar #tbBack,#tbar #tbFwd{display:none} #tbar button{width:56px;height:56px} }
   @media (max-width:430px){ .plDur{display:none} .plLab{width:22px} .plBtn{width:40px;height:40px} }
   #expStatus{position:fixed;left:14px;bottom:14px;background:rgba(0,0,0,.75);color:#ff9b6a;padding:6px 10px;border-radius:8px;font-size:13px;display:none;z-index:7}
 </style>
@@ -200,7 +215,7 @@
 <div id="panel"><h4>Zones</h4><div id="zlist"></div><div id="props"></div></div>
 <div id="drop">Drop a photo or a song</div>
 <div id="expStatus"></div>
-<div id="plist" aria-label="Tapes"><div class="plHead"><div class="plTabs"><button id="plAll" class="on">All tapes <span id="plAllN"></span></button><button id="plMine">My playlist <span id="plMineN"></span></button></div><button id="plClose" aria-label="Close">✕</button></div><div class="plBar"><button id="plPlay" class="hot">▶ Play all</button><span id="plHint"></span></div><div id="plRows"></div></div>
+<div id="plist" aria-label="Tapes"><div class="plHead"><div class="plTabs"><div class="plTitle">TRMZ OST <span id="plAllN"></span></div></div><button id="plClose" aria-label="Close">✕</button></div><div class="plBar"><button id="plPlay" class="hot">▶ Play all</button><span id="plHint"></span><button id="plReset" style="display:none">Reset order</button></div><div id="plRows"></div></div>
 <div id="pwdlg"><div class="box"><h3 id="pwMsg">Admin sign-in</h3><input type="password" id="pwIn" placeholder="Admin password"><div class="btns"><span style="flex:1"></span><button id="pwCancel">Cancel</button><button id="pwGo" class="hot">Sign in</button></div></div></div>
 <button id="exitPrev">Exit viewer preview</button>
 <div id="tdlg"><div class="box">
@@ -225,7 +240,7 @@
   <button data-a="up">↑ Move up</button><button data-a="down">↓ Move down</button>
   <button data-a="del" class="danger">🗑 Remove tape…</button></div>
 <input type="file" id="tapeFile" accept="audio/*,.mp3,.wav,.ogg,.flac,.m4a" multiple hidden>
-<div id="tbar"><button id="tbStart" title="Previous tape / back to start" aria-label="Previous tape or back to start"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button><button id="tbBack" title="Back 10 seconds" aria-label="Back 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 5v14L3 12z"/><path d="M21 5v14l-9-7z"/></svg></button><button id="tbPlay" title="Play" aria-label="Play"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></button><button id="tbPause" title="Pause" aria-label="Pause"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg></button><button id="tbStop" title="Stop" aria-label="Stop"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg></button><button id="tbFwd" title="Forward 10 seconds" aria-label="Forward 10 seconds"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M3 5v14l9-7z"/><path d="M12 5v14l9-7z"/></svg></button><button id="tbNext" title="Next tape" aria-label="Next tape"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 5v14l11-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><button id="tbList" title="Tapes &amp; playlist" aria-label="Tapes and playlist"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="3" y="5" width="3" height="3"/><rect x="8" y="5" width="13" height="3"/><rect x="3" y="10.5" width="3" height="3"/><rect x="8" y="10.5" width="13" height="3"/><rect x="3" y="16" width="3" height="3"/><rect x="8" y="16" width="13" height="3"/></svg></button><button id="tbRepeat" title="Repeat (screensaver)" aria-label="Repeat (screensaver)"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zM17 17H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg></button><button id="tbFs" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button><div id="tbTime">0:00</div><a id="tbCredit" style="display:none"><span id="tbcText"></span><span class="yt"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="5" width="22" height="14" rx="4" fill="#ff0033"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></span></a></div>
+<div id="tbar"><button id="tbStart" title="Previous tape" aria-label="Previous tape"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button><button id="tbPlay" class="big" title="Play" aria-label="Play"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button><button id="tbNext" title="Next tape" aria-label="Next tape"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M4 5v14l12-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><div id="tbInfo"><div class="tbRow"><a id="tbCredit"><span id="tbcText">TRMZ OST</span><span class="yt"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="5" width="22" height="14" rx="4" fill="#ff0033"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></span></a><span id="tbTime">0:00</span></div><div id="tbProg" title="Seek"><div id="tbProgFill"></div></div></div><button id="tbRepeat" class="mini" title="Repeat" aria-label="Repeat"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zM17 17H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg></button><button id="tbList" class="mini" title="Tapes" aria-label="Tapes"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="3" y="5" width="18" height="2.5"/><rect x="3" y="10.75" width="18" height="2.5"/><rect x="3" y="16.5" width="18" height="2.5"/></svg></button><button id="tbFs" class="mini" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button><button id="tbBack" hidden></button><button id="tbFwd" hidden></button><button id="tbPause" hidden></button><button id="tbStop" hidden></button></div>
 <div id="fsHint">Esc = exit fullscreen · Space = play/pause · H = show/hide controls</div>
 
 <script>
@@ -865,9 +880,11 @@ function render() {
   const o = readOpts(), env = d ? d.env : 0;
   let zm = 1, sx = 0, sy = 0;
   if (!editing) {
-    zm *= compactMode() ? 1.02 : (o.Frame || 1);
+    if (compactMode()) zm *= 1.02;
+    else if ($('optRacks').checked) { const ev = rackEase(); zm *= 1.02 + ((o.Frame || 1) - 1.02) * ev; sx += ev * 142; }
+    else zm *= o.Frame || 1;
     if (o.Zoom && dur) zm *= 1 + 0.05 * clamp(t / dur, 0, 1);
-    if (o.Shake) { zm *= 1.012 + 0.006 * env * env; sx = (hash(f * 1.7) - .5) * 8 * env * env; sy = (hash(f * 2.3) - .5) * 6 * env * env; }
+    if (o.Shake) { zm *= 1.012 + 0.006 * env * env; sx += (hash(f * 1.7) - .5) * 8 * env * env; sy += (hash(f * 2.3) - .5) * 6 * env * env; }
   }
   g.save();
   CAM = { zm, sx, sy };
@@ -910,11 +927,27 @@ function insideQuad(z, x, y) {
 }
 let drag = null;
 cv.addEventListener('pointerdown', e => {
-  { const [lx, ly] = toLogical(e), sl = e.button === 0 ? slotAt(lx, ly) : null;
-    if (sl && VIEWER && sl.idx >= TAPES.length) { /* empty slot: nothing for viewers */ }
-    else if (sl) { showBar(); const ic = e.pointerType === 'touch' ? null : iconAt(lx, ly, sl); if (ic === 'dl') { downloadTape(TAPES[sl.idx]); return; } if (ic === 'yt') { openLink(TAPES[sl.idx].link); return; } if (ic === 'edit') { openTapeDialog(sl.idx, false); return; } if (ic === 'del') { $('tdForm').dataset.direct = '1'; openTapeDialog(sl.idx, true); return; } $('tdForm').dataset.direct = '0';
-      if (e.pointerType === 'touch' && !VIEWER && sl.idx < TAPES.length) { LP = setTimeout(() => { LP = 'fired'; openTapeMenu(sl.idx, e.clientX, e.clientY); }, 550); LPIDX = sl.idx; return; }
-      if (sl.idx < TAPES.length) { if (sl.idx === curIndex() && S.buf) { S.playing ? pause() : play(); } else { PLAYSRC = 'all'; loadTape(sl.idx, true); } } else if (sl.idx === TAPES.length) $('tapeFile').click(); return; } }
+  { const [lx, ly] = toLogical(e), sl = e.button === 0 ? slotAt(lx, ly) : null, r0 = rackRects()[0];
+    if (r0 && e.button === 0 && !sl && inRack(lx, ly)) {
+      if (ly < r0.y + RACK_CAP + RACK_PAD + 6) scrollRack(-4);
+      else if (ly > slotRect(r0, rackSlots(r0) - 1).y + SLOT_H - 8) scrollRack(4);
+      showBar(); return;
+    }
+    if (sl) {
+      showBar(); const list = rackList();
+      if (sl.p > list.length || (sl.p === list.length && VIEWER)) return;
+      if (sl.p === list.length) { $('tapeFile').click(); return; }
+      const ti = list[sl.p], ic = e.pointerType === 'touch' ? null : iconAt(lx, ly, sl);
+      if (ic === 'dl') { downloadTape(TAPES[ti]); return; }
+      if (ic === 'yt') { openLink(TAPES[ti].link); return; }
+      if (ic === 'edit') { $('tdForm').dataset.direct = '0'; openTapeDialog(ti, false); return; }
+      if (ic === 'del') { $('tdForm').dataset.direct = '1'; openTapeDialog(ti, true); return; }
+      $('tdForm').dataset.direct = '0';
+      RD = { ti, from: sl.p, to: sl.p, y0: ly, y: ly, moved: false, ts: 0 };
+      if (e.pointerType === 'touch' && !VIEWER) { const cx = e.clientX, cy = e.clientY; RD.lp = setTimeout(() => { if (RD && !RD.moved) { const t2 = RD.ti; RD = null; openTapeMenu(t2, cx, cy); } }, 600); }
+      try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+      return;
+    } }
   if (!editing) { clickKeys(e); return; }
   const [x, y] = toLogical(e), hr = 14 * W / cv.getBoundingClientRect().width;
   for (let i = zones.length - 1; i >= 0; i--) {
@@ -1058,8 +1091,7 @@ function cleanLink(v) {
 function openLink(url) { if (!url) return; const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; document.body.appendChild(a); a.click(); a.remove(); }
 function updCredit() {
   const el = $('tbCredit'), t = TAPES[curIndex()];
-  if (!t) { el.style.display = 'none'; return; }
-  el.style.display = 'flex';
+  if (!t) { $('tbcText').textContent = 'TRMZ OST'; el.removeAttribute('href'); el.classList.remove('has'); el.title = ''; return; }
   $('tbcText').textContent = (t.title || '') + (t.artist ? '  ·  by ' + t.artist : '');
   if (t.link) { el.href = t.link; el.classList.add('has'); el.title = 'Open ' + (t.artist || 'the creator') + ' on YouTube'; }
   else { el.removeAttribute('href'); el.classList.remove('has'); el.title = ''; }
@@ -1116,7 +1148,7 @@ async function loadTape(i, autoplay, force) {
   LOADING = t.id;
   const ok = await decodeAnalyze(blob, t.title || t.file);
   LOADING = null;
-  if (ok) { t.dur = S.buf.duration; rackSave(); if (autoplay) play(); }
+  if (ok) { t.dur = S.buf.duration; revealCurrent(); rackSave(); if (autoplay) play(); }
   return ok;
 }
 function nextTape(dir) {
@@ -1188,32 +1220,47 @@ async function rackRestore() {
   if (i >= 0) loadTape(i, false); else if (TAPES.length && !S.buf) loadTape(0, false);
   updUI();
 }
-// ---- geometry (frame space, not zoomed with the boombox) ----
+// ---- one rack = the playlist (frame space, not zoomed with the boombox) ----
 const SLOT_H = 46, RACK_PAD = 14, RACK_CAP = 54;
-let RACK_VIS = 1, rackT = 0;
+let RACK_VIS = 1, rackT = 0, RSCROLL = 0, RD = null;
+let VORD = [];
+try { VORD = JSON.parse(localStorage.getItem('trmzbb.order') || '[]'); if (!Array.isArray(VORD)) VORD = []; } catch (e) { VORD = []; }
+function rackList() {
+  const all = TAPES.map((_, i) => i);
+  if (!VIEWER || !VORD.length) return all;
+  const pos = new Map(VORD.map((id, k) => [id, k]));
+  return all.filter(i => pos.has(TAPES[i].id)).sort((a, b) => pos.get(TAPES[a].id) - pos.get(TAPES[b].id)).concat(all.filter(i => !pos.has(TAPES[i].id)));
+}
+function applyOrder(ids) {
+  if (VIEWER) { VORD = ids; try { localStorage.setItem('trmzbb.order', JSON.stringify(VORD)); } catch (e) {} renderList(); }
+  else { const m = new Map(TAPES.map(t => [t.id, t])); TAPES = ids.map(id => m.get(id)).filter(Boolean); rackSave(); }
+}
+function resetOrder() { VORD = []; try { localStorage.removeItem('trmzbb.order'); } catch (e) {} renderList(); }
 function updateRackVis() {
   const now = performance.now(), dt = Math.min(0.1, (now - (rackT || now)) / 1000); rackT = now;
-  const busy = editing || menuIdx >= 0 || dlgIdx >= 0 || HOVER >= 0 || LOADING;
+  const busy = editing || menuIdx >= 0 || dlgIdx >= 0 || HOVER >= 0 || LOADING || RD;
   const target = ($('optRackHide').checked && document.body.classList.contains('idle') && !busy) ? 0 : 1;
-  RACK_VIS += (target - RACK_VIS) * (1 - Math.exp(-dt * 5));
+  RACK_VIS += (target - RACK_VIS) * (1 - Math.exp(-dt * 4));
   if (Math.abs(target - RACK_VIS) < 0.001) RACK_VIS = target;
 }
+function rackEase() { if (!$('optRacks').checked || compactMode()) return 0; return RACK_VIS * RACK_VIS * (3 - 2 * RACK_VIS); }
 function rackRects() {
   if (!$('optRacks').checked || compactMode()) return [];
-  const w = 250, h = 840, y = (H - h) / 2, e = RACK_VIS * RACK_VIS * (3 - 2 * RACK_VIS), off = (1 - e) * (w + 60);
-  return [{ x: 34 - off, y, w, h, side: 'L', plate: 'TRMZ' }, { x: W - 34 - w + off, y, w, h, side: 'R', plate: 'OST' }];
+  const w = 250, h = 840, y = (H - h) / 2, off = (1 - rackEase()) * (w + 60);
+  return [{ x: 34 - off, y, w, h, side: 'L', plate: 'TRMZ OST' }];
 }
 function rackSlots(r) { return Math.floor((r.h - RACK_CAP - RACK_PAD * 2) / SLOT_H); }
 function slotRect(r, k) { return { x: r.x + RACK_PAD, y: r.y + RACK_CAP + RACK_PAD + k * SLOT_H, w: r.w - RACK_PAD * 2, h: SLOT_H - 6 }; }
+function slotCount() { const r = rackRects()[0]; return r ? rackSlots(r) : 0; }
 function slotAt(x, y) {
-  let base = 0;
-  for (const r of rackRects()) {
-    const n = rackSlots(r);
-    for (let k = 0; k < n; k++) { const s = slotRect(r, k); if (x >= s.x - 34 && x <= s.x + s.w + 34 && y >= s.y && y <= s.y + s.h) return { idx: base + k, r }; }
-    base += n;
-  }
+  const r = rackRects()[0]; if (!r) return null;
+  const n = rackSlots(r);
+  for (let k = 0; k < n; k++) { const s = slotRect(r, k); if (x >= s.x - 6 && x <= s.x + s.w + 36 && y >= s.y && y <= s.y + s.h) return { r, k, p: k + RSCROLL }; }
   return null;
 }
+function inRack(x, y) { const r = rackRects()[0]; return !!r && x >= r.x && x <= r.x + r.w + 30 && y >= r.y && y <= r.y + r.h; }
+function scrollRack(d) { const n = slotCount(), total = rackList().length + (VIEWER ? 0 : 1); RSCROLL = clamp(RSCROLL + d, 0, Math.max(0, total - n)); }
+function revealCurrent() { const n = slotCount(); if (!n) return; const p = rackList().indexOf(curIndex()); if (p < 0) return; if (p < RSCROLL) RSCROLL = p; else if (p >= RSCROLL + n) RSCROLL = p - n + 1; }
 function drawRackFrame(g, r) {
   let gr = g.createLinearGradient(r.x, 0, r.x + r.w, 0);
   gr.addColorStop(0, '#24140a'); gr.addColorStop(.12, '#4a2c17'); gr.addColorStop(.5, '#3a2211'); gr.addColorStop(.88, '#4a2c17'); gr.addColorStop(1, '#1e1008');
@@ -1268,30 +1315,37 @@ function drawSpine(g, s, t, cur, side) {
 function drawRacks(g) {
   updateRackVis();
   const rects = rackRects(); if (!rects.length || RACK_VIS < 0.002) return;
-  const ci = curIndex(); let base = 0;
-  for (const r of rects) {
-    drawRackFrame(g, r);
-    const n = rackSlots(r);
-    for (let k = 0; k < n; k++) {
-      const i = base + k, s = slotRect(r, k);
-      g.fillStyle = 'rgba(0,0,0,.55)'; g.fillRect(s.x - 4, s.y + s.h + 1, s.w + 8, 3);          // shelf shadow
-      g.fillStyle = 'rgba(255,190,140,.12)'; g.fillRect(s.x - 4, s.y + s.h + 4, s.w + 8, 1);    // shelf edge
-      if (i < TAPES.length) {
-        const dir = r.side === 'L' ? 1 : -1, off = i === ci ? 22 : (i === HOVER && !S.exporting ? 9 : 0);
-        drawSpine(g, { x: s.x + dir * off, y: s.y + 2, w: s.w, h: s.h - 4 }, TAPES[i], i === ci, r.side);
-        if (TAPES[i].id === LOADING) { g.fillStyle = 'rgba(255,170,90,.25)'; g.fillRect(s.x + dir * off, s.y + 2, s.w * ((performance.now() / 600) % 1), s.h - 4); }
-      } else if (i === TAPES.length && !S.exporting && !VIEWER) {
-        g.save(); g.setLineDash([6, 5]); g.strokeStyle = i === HOVER ? 'rgba(255,190,130,.9)' : 'rgba(255,190,130,.4)'; g.lineWidth = 1.5;
-        g.strokeRect(s.x + 2, s.y + 4, s.w - 4, s.h - 8); g.setLineDash([]);
-        g.fillStyle = i === HOVER ? '#ffcf9a' : 'rgba(255,207,154,.6)'; g.font = '700 14px system-ui'; g.textAlign = 'center'; g.textBaseline = 'middle';
-        g.fillText('＋  ADD TAPE', s.x + s.w / 2, s.y + s.h / 2); g.restore();
-      }
+  const r = rects[0], n = rackSlots(r), list = rackList(), ci = curIndex();
+  scrollRack(0);
+  drawRackFrame(g, r);
+  let shown = list.slice(), dragTi = -1;
+  if (RD && RD.moved) { dragTi = RD.ti; shown = shown.filter(i => i !== dragTi); shown.splice(RD.to, 0, -1); }
+  for (let k = 0; k < n; k++) {
+    const p = k + RSCROLL, s = slotRect(r, k);
+    g.fillStyle = 'rgba(0,0,0,.55)'; g.fillRect(s.x - 4, s.y + s.h + 1, s.w + 8, 3);
+    g.fillStyle = 'rgba(255,190,140,.12)'; g.fillRect(s.x - 4, s.y + s.h + 4, s.w + 8, 1);
+    if (p < shown.length) {
+      const ti = shown[p];
+      if (ti === -1) { g.save(); g.setLineDash([6, 5]); g.strokeStyle = 'rgba(255,170,90,.8)'; g.lineWidth = 2; g.strokeRect(s.x + 2, s.y + 3, s.w - 4, s.h - 6); g.restore(); continue; }
+      const off = ti === ci ? 22 : (p === HOVER && !S.exporting && !RD ? 9 : 0);
+      drawSpine(g, { x: s.x + off, y: s.y + 2, w: s.w, h: s.h - 4 }, TAPES[ti], ti === ci, 'L');
+      if (TAPES[ti].id === LOADING) { g.fillStyle = 'rgba(255,170,90,.25)'; g.fillRect(s.x + off, s.y + 2, s.w * ((performance.now() / 600) % 1), s.h - 4); }
+    } else if (p === shown.length && !S.exporting && !VIEWER && !RD) {
+      g.save(); g.setLineDash([6, 5]); g.strokeStyle = p === HOVER ? 'rgba(255,190,130,.9)' : 'rgba(255,190,130,.4)'; g.lineWidth = 1.5;
+      g.strokeRect(s.x + 2, s.y + 4, s.w - 4, s.h - 8); g.setLineDash([]);
+      g.fillStyle = p === HOVER ? '#ffcf9a' : 'rgba(255,207,154,.6)'; g.font = '700 14px system-ui'; g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.fillText('＋  ADD TAPE', s.x + s.w / 2, s.y + s.h / 2); g.restore();
     }
-    base += n;
   }
-  if (TAPES.length > base) {
-    const r = rects[rects.length - 1]; g.fillStyle = '#ffcf9a'; g.font = '700 13px system-ui'; g.textAlign = 'center';
-    g.fillText(`+${TAPES.length - base} more (⏭ to reach)`, r.x + r.w / 2, r.y + r.h - 4);
+  const total = shown.length + (VIEWER ? 0 : 1);
+  g.fillStyle = '#ffcf9a'; g.font = '700 13px system-ui'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  if (RSCROLL > 0) g.fillText('▲  more', r.x + r.w / 2, r.y + RACK_CAP + 7);
+  if (total > RSCROLL + n) g.fillText('▼  more', r.x + r.w / 2, slotRect(r, n - 1).y + SLOT_H + 4);
+  if (RD && RD.moved && dragTi >= 0) {
+    const s0 = slotRect(r, 0);
+    g.save(); g.shadowColor = 'rgba(0,0,0,.7)'; g.shadowBlur = 24; g.shadowOffsetY = 8;
+    drawSpine(g, { x: s0.x + 16, y: RD.y - (SLOT_H - 10) / 2, w: s0.w, h: SLOT_H - 10 }, TAPES[dragTi], dragTi === ci, 'L');
+    g.restore();
   }
 }
 // ---- tape context menu ----
@@ -1343,40 +1397,34 @@ $('tdYes').onclick = () => { const i = dlgIdx; closeTapeDialog(); removeTape(i);
 $('tdlg').addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Escape') closeTapeDialog(); if (e.key === 'Enter' && $('tdForm').style.display !== 'none') saveTapeDialog(); });
 $('tdlg').addEventListener('pointerdown', e => { if (e.target.id === 'tdlg') closeTapeDialog(); });
 // ---- hover icons on the spine ----
-function spineIcons(sl) {
-  const s = slotRect(sl.r, sl.idx - rackBase(sl.r)), dir = sl.r.side === 'L' ? 1 : -1;
-  const off = sl.idx === curIndex() ? 22 : 9, x1 = s.x + dir * off + s.w - 13, y = s.y + s.h / 2;
-  return { edit: { x: x1 - 30, y }, del: { x: x1, y }, dl: { x: x1, y }, yt: { x: x1 - 30, y } };
+function iconKeys(t) { return VIEWER ? viewerIcons(t) : ['edit', 'del']; }
+function spineIcons(p, keys) {
+  const r = rackRects()[0], s = slotRect(r, p - RSCROLL), ti = rackList()[p];
+  const off = ti === curIndex() ? 22 : 9, x1 = s.x + off + s.w - 13, y = s.y + s.h / 2, pos = {};
+  keys.slice().reverse().forEach((k, j) => { pos[k] = { x: x1 - 30 * j, y }; });
+  return pos;
 }
-function rackBase(r) { let b = 0; for (const q of rackRects()) { if (q.side === r.side) return b; b += rackSlots(q); } return b; }
+function hoverTi() { const l = rackList(); return HOVER >= 0 && HOVER < l.length ? l[HOVER] : -1; }
+const ICON_STYLE = { dl: ['⬇', '#2f8f4e'], yt: ['▶', '#ff0033'], edit: ['✎', '#2a6fc4'], del: ['✕', '#b8321c'] };
 function drawSpineIcons(g) {
-  if (HOVER < 0 || HOVER >= TAPES.length || S.exporting || dlgIdx >= 0) return;
-  if (VIEWER && !viewerIcons(TAPES[HOVER]).length) return;
-  let base = 0;
-  for (const r of rackRects()) {
-    const n = rackSlots(r);
-    if (HOVER < base + n) {
-      const ic = spineIcons({ r, idx: HOVER });
-      (VIEWER ? viewerIcons(TAPES[HOVER]).map(k => k === 'dl' ? ['dl', '⬇', '#2f8f4e'] : ['yt', '▶', '#ff0033']) : [['edit', '✎', '#2a6fc4'], ['del', '✕', '#b8321c']]).forEach(([k, ch, col]) => {
-        const p = ic[k], hot = ICON_HOVER === k;
-        g.fillStyle = hot ? col : 'rgba(20,14,12,.85)'; g.beginPath(); g.arc(p.x, p.y, 12, 0, 7); g.fill();
-        g.strokeStyle = hot ? '#fff' : col; g.lineWidth = 2; g.stroke();
-        g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(ch, p.x, p.y + 1);
-      });
-      return;
-    }
-    base += n;
+  const ti = hoverTi(); if (ti < 0 || S.exporting || dlgIdx >= 0 || RD || !rackRects().length) return;
+  const keys = iconKeys(TAPES[ti]); if (!keys.length) return;
+  const pos = spineIcons(HOVER, keys);
+  for (const k of keys) {
+    const p = pos[k], [ch, col] = ICON_STYLE[k], hot = ICON_HOVER === k;
+    g.fillStyle = hot ? col : 'rgba(20,14,12,.85)'; g.beginPath(); g.arc(p.x, p.y, 12, 0, 7); g.fill();
+    g.strokeStyle = hot ? '#fff' : col; g.lineWidth = 2; g.stroke();
+    g.fillStyle = '#fff'; g.font = '700 14px system-ui'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(ch, p.x, p.y + 1);
   }
 }
 let ICON_HOVER = null;
 function iconAt(lx, ly, sl) {
-  if (!sl || sl.idx >= TAPES.length) return null;
-  const ic = spineIcons(sl);
-  const keys = VIEWER ? viewerIcons(TAPES[sl.idx]) : ['edit', 'del'];
-  for (const k of keys) if (Math.hypot(ic[k].x - lx, ic[k].y - ly) < 15) return k;
+  if (!sl) return null; const l = rackList(); if (sl.p >= l.length) return null;
+  const keys = iconKeys(TAPES[l[sl.p]]); if (!keys.length) return null;
+  const pos = spineIcons(sl.p, keys);
+  for (const k of keys) if (Math.hypot(pos[k].x - lx, pos[k].y - ly) < 15) return k;
   return null;
 }
-
 
 /* ================= tape list + playlists (touch & TV friendly) ================= */
 let PLTAB = 'all', PLAYSRC = 'all', MY = [], DRAG2 = null;
@@ -1386,7 +1434,7 @@ function saveMy() { try { localStorage.setItem('trmzbb.my', JSON.stringify(MY));
 function isPortrait() { return innerHeight > innerWidth; }
 function compactMode() { return isPortrait() || innerWidth < 1000; }
 function myIdx() { return MY.map(id => TAPES.findIndex(t => t.id === id)).filter(i => i >= 0); }
-function playOrder() { if (PLAYSRC === 'mine') { const o = myIdx(); if (o.length) return o; } return TAPES.map((_, i) => i); }
+function playOrder() { return rackList(); }
 function isBackKey(e) { return e.key === 'Escape' || e.key === 'GoBack' || e.key === 'BrowserBack' || e.keyCode === 461 || e.keyCode === 10009 || (e.key === 'Backspace' && !(e.target && e.target.tagName === 'INPUT')); }
 function openList(focusCur) {
   $('plist').classList.add('open'); renderList(); showBar();
@@ -1396,25 +1444,21 @@ function closeList() { $('plist').classList.remove('open'); const b = $('tbList'
 function renderList() {
   const box = $('plRows'); if (!box || DRAG2) return;
   const ae = document.activeElement, focusId = ae && ae.closest && ae.closest('.plRow') ? ae.closest('.plRow').dataset.id : null;
-  const mine = myIdx();
-  $('plAllN').textContent = TAPES.length ? '(' + TAPES.length + ')' : ''; $('plMineN').textContent = mine.length ? '(' + mine.length + ')' : '';
-  $('plAll').classList.toggle('on', PLTAB === 'all'); $('plMine').classList.toggle('on', PLTAB === 'mine');
-  const idxs = PLTAB === 'all' ? TAPES.map((_, i) => i) : mine;
-  const canDrag = PLTAB === 'mine' || (!VIEWER && !MANIFEST);
-  $('plPlay').textContent = PLTAB === 'all' ? '▶ Play all' : '▶ Play my playlist';
+  const idxs = rackList();
+  $('plAllN').textContent = idxs.length ? '(' + idxs.length + ')' : '';
   $('plPlay').disabled = !idxs.length;
-  $('plHint').textContent = PLTAB === 'mine' ? (idxs.length ? 'Drag ≡ to change the order' : '') : (canDrag ? 'Drag ≡ to reorder the rack' : 'Tap ＋ to add to your playlist');
+  $('plReset').style.display = VIEWER && VORD.length ? '' : 'none';
+  $('plHint').textContent = idxs.length > 1 ? 'Drag ≡ to change the order' : '';
   box.innerHTML = '';
-  if (!idxs.length) { const d = document.createElement('div'); d.className = 'plEmpty'; d.textContent = PLTAB === 'mine' ? 'Your playlist is empty. Open "All tapes" and tap ＋ on the songs you want.' : 'No tapes yet.'; box.appendChild(d); return; }
+  if (!idxs.length) { const d = document.createElement('div'); d.className = 'plEmpty'; d.textContent = 'No tapes yet.'; box.appendChild(d); return; }
   const ci = curIndex();
   for (const ti of idxs) {
-    const t = TAPES[ti], L = LABEL_C[t.label] || LABEL_C.cream, inMine = MY.includes(t.id);
+    const t = TAPES[ti], L = LABEL_C[t.label] || LABEL_C.cream;
     const row = document.createElement('div');
     row.className = 'plRow' + (ti === ci ? ' cur' : '') + (ti === ci && S.playing ? ' playing' : '');
     row.tabIndex = 0; row.dataset.id = t.id; row.setAttribute('role', 'button');
-    row.innerHTML = (canDrag ? '<span class="plDrag" title="Drag to reorder">≡</span>' : '') +
+    row.innerHTML = '<span class="plDrag" title="Drag to reorder">≡</span>' +
       `<span class="plLab" style="background:${L[0]};border-left:6px solid ${L[1]}"></span><span class="plTxt"><b></b><small></small></span><span class="plDur"></span>` +
-      (PLTAB === 'all' ? `<button class="plBtn plAdd${inMine ? ' on' : ''}" tabindex="-1" title="${inMine ? 'In your playlist (tap to remove)' : 'Add to my playlist'}">${inMine ? '✓' : '＋'}</button>` : '<button class="plBtn plRem" tabindex="-1" title="Remove from my playlist">✕</button>') +
       (t.link ? '<button class="plBtn plYt" tabindex="-1" title="Creator on YouTube">▶</button>' : '') +
       (SITE_API && t.download !== false && t.src ? '<button class="plBtn plDl" tabindex="-1" title="Download">⬇</button>' : '');
     row.querySelector('b').textContent = t.title || t.file || 'Untitled';
@@ -1424,24 +1468,16 @@ function renderList() {
   }
   if (focusId) { const el = [...box.querySelectorAll('.plRow')].find(r => r.dataset.id === focusId); if (el) el.focus({ preventScroll: true }); }
 }
-$('plAll').onclick = () => { PLTAB = 'all'; renderList(); };
-$('plMine').onclick = () => { PLTAB = 'mine'; renderList(); };
+$('plReset').onclick = resetOrder;
 $('plClose').onclick = closeList;
 $('tbList').onclick = () => $('plist').classList.contains('open') ? closeList() : openList(false);
-$('plPlay').onclick = () => {
-  PLAYSRC = PLTAB; saveMy();
-  const order = playOrder(); if (!order.length) return;
-  loadTape(order[0], true);
-};
+$('plPlay').onclick = () => { const order = playOrder(); if (order.length) loadTape(order[0], true); };
 $('plRows').addEventListener('click', e => {
   if (DRAG2 || e.target.closest('.plDrag')) return;
   const row = e.target.closest('.plRow'); if (!row) return;
   const ti = TAPES.findIndex(t => t.id === row.dataset.id); if (ti < 0) return; const t = TAPES[ti];
-  if (e.target.closest('.plAdd')) { if (MY.includes(t.id)) MY = MY.filter(x => x !== t.id); else MY.push(t.id); saveMy(); renderList(); return; }
-  if (e.target.closest('.plRem')) { MY = MY.filter(x => x !== t.id); saveMy(); renderList(); return; }
   if (e.target.closest('.plYt')) { openLink(t.link); return; }
   if (e.target.closest('.plDl')) { downloadTape(t); return; }
-  PLAYSRC = PLTAB; saveMy();
   if (ti === curIndex() && S.buf) { S.playing ? pause() : play(); } else loadTape(ti, true);
 });
 // drag to reorder (mouse, finger or pen)
@@ -1464,8 +1500,7 @@ function endDrag2() {
   if (!DRAG2) return;
   const ids = [...$('plRows').querySelectorAll('.plRow')].map(r => r.dataset.id);
   DRAG2.row.classList.remove('dragging'); DRAG2 = null;
-  if (PLTAB === 'mine') { MY = ids; saveMy(); renderList(); }
-  else { const m = new Map(TAPES.map(t => [t.id, t])); TAPES = ids.map(id => m.get(id)).filter(Boolean); rackSave(); }
+  applyOrder(ids);
 }
 $('plRows').addEventListener('pointerup', endDrag2);
 $('plRows').addEventListener('pointercancel', endDrag2);
@@ -1512,21 +1547,35 @@ function clickKeys(e) {
 cv.addEventListener('pointermove', e => {
   showBar();
   const [lx, ly] = toLogical(e), sl = slotAt(lx, ly);
-  HOVER = sl && (VIEWER ? sl.idx < TAPES.length : sl.idx <= TAPES.length) ? sl.idx : -1;
+  const RL = rackList().length; HOVER = sl && (VIEWER ? sl.p < RL : sl.p <= RL) ? sl.p : -1;
   ICON_HOVER = iconAt(lx, ly, sl);
-  if (!editing) cv.style.cursor = (HOVER >= 0 || keyAt(e)) ? 'pointer' : '';
+  if (!editing && !(RD && RD.moved)) cv.style.cursor = (HOVER >= 0 || keyAt(e) || (inRack(lx, ly) && !sl)) ? 'pointer' : '';
 });
 cv.addEventListener('pointerleave', () => { HOVER = -1; ICON_HOVER = null; });
-let LP = null, LPIDX = -1;
-cv.addEventListener('pointerup', e => {
-  if (LP === null) return;
-  if (LP !== 'fired') { clearTimeout(LP); const i = LPIDX; if (i === curIndex() && S.buf) { S.playing ? pause() : play(); } else loadTape(i, true); }
-  LP = null;
+cv.addEventListener('pointermove', e => {
+  if (!RD) return;
+  const [, ly] = toLogical(e); RD.y = ly;
+  if (!RD.moved && Math.abs(ly - RD.y0) > 8) { RD.moved = true; clearTimeout(RD.lp); }
+  if (!RD.moved) return;
+  cv.style.cursor = 'grabbing';
+  const r = rackRects()[0]; if (!r) return;
+  const n = rackSlots(r), list = rackList(), now = performance.now();
+  let k = Math.floor((ly - (r.y + RACK_CAP + RACK_PAD)) / SLOT_H);
+  if ((k < 0 || k >= n) && now - RD.ts > 160) { scrollRack(k < 0 ? -1 : 1); RD.ts = now; }
+  RD.to = clamp(clamp(k, 0, n - 1) + RSCROLL, 0, list.length - 1);
 });
+cv.addEventListener('pointerup', () => {
+  if (!RD) return; clearTimeout(RD.lp);
+  const d = RD; RD = null; cv.style.cursor = '';
+  if (!d.moved) { if (d.ti === curIndex() && S.buf) { S.playing ? pause() : play(); } else loadTape(d.ti, true); return; }
+  if (d.to !== d.from) { const ids = rackList().map(i => TAPES[i].id), [m] = ids.splice(d.from, 1); ids.splice(d.to, 0, m); applyOrder(ids); }
+});
+cv.addEventListener('pointercancel', () => { if (RD) { clearTimeout(RD.lp); RD = null; } });
+cv.addEventListener('wheel', e => { const [lx, ly] = toLogical(e); if (inRack(lx, ly)) { e.preventDefault(); scrollRack(e.deltaY > 0 ? 1 : -1); showBar(); } }, { passive: false });
 cv.addEventListener('contextmenu', e => {
-  const [lx, ly] = toLogical(e), sl = slotAt(lx, ly);
-  if (sl && (VIEWER || sl.idx < TAPES.length)) e.preventDefault();
-  if (sl && !VIEWER && sl.idx < TAPES.length) openTapeMenu(sl.idx, e.clientX, e.clientY);
+  const [lx, ly] = toLogical(e), sl = slotAt(lx, ly), L = rackList();
+  if (sl) e.preventDefault();
+  if (sl && !VIEWER && sl.p < L.length) openTapeMenu(L[sl.p], e.clientX, e.clientY);
 });
 addEventListener('pointerdown', e => { if (!e.target.closest('#tmenu')) closeTapeMenu(); }, true);
 $('tmenu').addEventListener('click', e => {
@@ -1547,10 +1596,17 @@ $('optRacks').onchange = () => { saveLocal(); };
 $('viewBtn').onclick = () => setViewer(true, true);
 $('exitPrev').onclick = () => setViewer(false, false);
 if (/view/.test(location.hash)) setViewer(true, true);
+(function () {
+  const pr = $('tbProg'); let down = false;
+  const at = e => { if (!S.buf) return; const r = pr.getBoundingClientRect(); seekTo(clamp((e.clientX - r.left) / r.width, 0, 1) * S.buf.duration); };
+  pr.addEventListener('pointerdown', e => { down = true; try { pr.setPointerCapture(e.pointerId); } catch (_) {} at(e); });
+  pr.addEventListener('pointermove', e => { if (down) at(e); });
+  ['pointerup', 'pointercancel'].forEach(ev => pr.addEventListener(ev, () => { down = false; }));
+})();
 $('tbStart').onclick = () => { if (TAPES.length > 1 && curTime() < 3) nextTape(-1); else seekTo(0); };
 $('tbNext').onclick = () => nextTape(1);
 $('tbBack').onclick = () => nudge(-10);
-$('tbPlay').onclick = () => play();
+$('tbPlay').onclick = () => { if (!S.buf) { const o = playOrder(); if (o.length) loadTape(o[0], true); return; } S.playing ? pause() : play(); };
 $('tbPause').onclick = () => S.playing ? pause() : play();
 $('tbStop').onclick = stopTape;
 $('tbFwd').onclick = () => nudge(10);
@@ -1565,7 +1621,9 @@ function updUI() {
   const has = !!S.buf && !S.exporting, paused = has && !S.playing && S.offset > 0.05 && S.offset < S.buf.duration - 0.05;
   ['tbStart', 'tbBack', 'tbPlay', 'tbPause', 'tbStop', 'tbFwd'].forEach(id => $(id).disabled = !has);
   $('tbNext').disabled = S.exporting || TAPES.length < 2;
-  $('tbPlay').classList.toggle('on', S.playing); $('tbPause').classList.toggle('on', paused);
+  $('tbPlay').innerHTML = S.playing ? '<svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>' : '<svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  $('tbPlay').title = S.playing ? 'Pause' : 'Play'; $('tbPlay').setAttribute('aria-label', $('tbPlay').title);
+  $('tbPlay').disabled = S.exporting || (!S.buf && !TAPES.length);
   $('tbRepeat').classList.toggle('on', REPEAT);
   wakeLock(S.playing);
   updCredit();
@@ -1646,8 +1704,8 @@ addEventListener('keydown', e => {
   if (e.key === 'Escape') closeTapeMenu();
   if (e.key === 'MediaRewind') nudge(-30);
   if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !S.exporting && !editing && !inList) {
-    const btns = [...document.querySelectorAll('#tbar button:not(:disabled)')], i = btns.indexOf(document.activeElement);
-    if ((barHidden || noFocus) && i < 0) { e.preventDefault(); $('tbPlay').disabled ? btns[0] && btns[0].focus() : (S.playing ? $('tbPause') : $('tbPlay')).focus(); }
+    const btns = [...document.querySelectorAll('#tbar button:not(:disabled)')].filter(b => b.offsetParent), i = btns.indexOf(document.activeElement);
+    if ((barHidden || noFocus) && i < 0) { e.preventDefault(); $('tbPlay').disabled ? btns[0] && btns[0].focus() : $('tbPlay').focus(); }
     else if (i >= 0) { e.preventDefault(); btns[(i + (e.key === 'ArrowRight' ? 1 : btns.length - 1)) % btns.length].focus(); }
   }
   if (e.key === 'Enter' && !onBtn && e.target.tagName !== 'INPUT') { if (S.buf && !S.exporting) S.playing ? pause() : play(); }
@@ -1664,7 +1722,7 @@ function sizeCanvas() { cv.width = W * SCALE; cv.height = H * SCALE; buildBG(); 
 function fit() {
   if ($('tbar').previousElementSibling !== $('stage')) { $('stage').after($('tbar')); $('tbar').after($('plist')); }
   const P = isPortrait();
-  document.body.classList.toggle('portrait', P);
+  document.body.classList.toggle('portrait', P); document.body.classList.toggle('compact', compactMode());
   document.documentElement.style.overflow = P ? 'auto' : 'hidden'; document.body.style.overflow = P ? 'auto' : 'hidden';
   if (P) { const w = innerWidth; cv.style.width = w + 'px'; cv.style.height = w * 9 / 16 + 'px'; }
   else { const s = Math.min(innerWidth / 16, innerHeight / 9); cv.style.width = s * 16 + 'px'; cv.style.height = s * 9 + 'px'; }
@@ -1738,6 +1796,7 @@ updUI(); showBar();
 let lastUi = 0;
 (function loop(ts) {
   render();
+  $('tbProgFill').style.width = S.buf ? (clamp(curTime() / S.buf.duration, 0, 1) * 100).toFixed(2) + '%' : '0%';
   if (S.buf && ts - lastUi > 200) { lastUi = ts; const t = curTime(); $('time').textContent = $('tbTime').textContent = fmt(t) + ' / ' + fmt(S.buf.duration); if (document.activeElement !== $('seek')) $('seek').value = Math.round(t / S.buf.duration * 1000); }
   requestAnimationFrame(loop);
 })(0);
