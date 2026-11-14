@@ -241,7 +241,7 @@
   <button data-a="up">↑ Move up</button><button data-a="down">↓ Move down</button>
   <button data-a="del" class="danger">🗑 Remove tape…</button></div>
 <input type="file" id="tapeFile" accept="audio/*,.mp3,.wav,.ogg,.flac,.m4a" multiple hidden>
-<div id="tbar"><button id="tbStore" class="mini" hidden title="Back to the TRMZ Video store" aria-label="Back to the TRMZ Video store"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6L4 12l6 6"/><path d="M4 12h9"/><rect x="15" y="7" width="7" height="10" rx="1.2"/><circle cx="18.5" cy="12" r="1.4"/></svg></button><span id="tbSep" hidden></span><button id="tbStart" title="Previous tape" aria-label="Previous tape"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button><button id="tbPlay" class="big" title="Play" aria-label="Play"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button><button id="tbNext" title="Next tape" aria-label="Next tape"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M4 5v14l12-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><div id="tbInfo"><div class="tbRow"><a id="tbCredit"><span id="tbcText">TRMZ OST</span><span class="yt"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="5" width="22" height="14" rx="4" fill="#ff0033"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></span></a><span id="tbTime">0:00</span></div><div id="tbProg" title="Seek"><div id="tbProgFill"></div></div></div><button id="tbRepeat" class="mini" title="Repeat" aria-label="Repeat"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zM17 17H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg></button><button id="tbList" class="mini" title="Tapes" aria-label="Tapes"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="3" y="5" width="18" height="2.5"/><rect x="3" y="10.75" width="18" height="2.5"/><rect x="3" y="16.5" width="18" height="2.5"/></svg></button><button id="tbFs" class="mini" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button><button id="tbBack" hidden></button><button id="tbFwd" hidden></button><button id="tbPause" hidden></button><button id="tbStop" hidden></button></div>
+<div id="tbar"><button id="tbStore" class="mini" hidden title="Back to the TRMZ Video store" aria-label="Back to the TRMZ Video store"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6L4 12l6 6"/><path d="M4 12h9"/><rect x="15" y="7" width="7" height="10" rx="1.2"/><circle cx="18.5" cy="12" r="1.4"/></svg></button><span id="tbSep" hidden></span><button id="tbStart" title="Previous tape" aria-label="Previous tape"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button><button id="tbPlay" class="big" title="Play" aria-label="Play"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button><button id="tbNext" title="Next tape" aria-label="Next tape"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M4 5v14l12-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><div id="tbInfo"><div class="tbRow"><a id="tbCredit"><span id="tbcText">TRMZ OST</span><span class="yt"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="5" width="22" height="14" rx="4" fill="#ff0033"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></span></a><span id="tbTime">0:00</span></div><div id="tbProg" title="Seek"><div id="tbProgFill"></div></div></div><button id="tbRepeat" class="mini" title="Repeat" aria-label="Repeat"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zM17 17H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg></button><button id="tbList" class="mini" title="Tapes" aria-label="Tapes"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="3" y="5" width="18" height="2.5"/><rect x="3" y="10.75" width="18" height="2.5"/><rect x="3" y="16.5" width="18" height="2.5"/></svg></button><button id="tbPip" class="mini" hidden title="Mini player (floats on top)" aria-label="Mini player"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><rect x="12" y="11" width="7" height="6" rx="1" fill="currentColor" stroke="none"/></svg></button><button id="tbFs" class="mini" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 4h6v2H6v4H4zM14 4h6v6h-2V6h-4zM4 14h2v4h4v2H4zM18 14h2v6h-6v-2h4z"/></svg></button><button id="tbBack" hidden></button><button id="tbFwd" hidden></button><button id="tbPause" hidden></button><button id="tbStop" hidden></button></div>
 <div id="fsHint">Esc = exit fullscreen · Space = play/pause · H = show/hide controls</div>
 
 <script>
@@ -868,18 +868,35 @@ $('editBtn').onclick = () => { editing = !editing; document.body.classList.toggl
 
 /* ================= playback ================= */
 function ensureAC() { if (!S.ac) { S.ac = new (window.AudioContext || window.webkitAudioContext)(); S.gain = S.ac.createGain(); S.gain.connect(S.ac.destination); } return S.ac; }
-function curTime() { return S.playing ? S.ac.currentTime - S.startAt : S.offset; }
+/* Normal listening plays through a real <audio> element so phones show lock-screen controls and keep playing
+   in the background. The visuals only need the clock (analysis is precomputed). Export still uses the buffer source. */
+const EL = new Audio(); EL.preload = 'auto'; EL.setAttribute('playsinline', ''); let elUrl = null;
+function elSet(blob) { try { if (elUrl) URL.revokeObjectURL(elUrl); elUrl = URL.createObjectURL(blob); EL.src = elUrl; S.elBuf = S.buf; } catch (e) { S.elBuf = null; } }
+function elOnEnd(tok) { if (tok !== S.token) return; S.playing = false; S.el = false; S.offset = S.buf.duration; updUI(); if (!S.exporting) onTrackEnd(); }
+EL.addEventListener('pause', () => { if (S.playing && S.el && EL.paused && !EL.ended) { S.offset = EL.currentTime; S.token++; S.playing = false; S.el = false; updUI(); } }); // paused by the phone (call, headphones out)
+let elUnlocked = false;
+function elUnlock() { if (elUnlocked) return; elUnlocked = true; if (!EL.src) { const a = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA='); a.play().catch(() => {}); } ensureAC().resume().catch(() => {}); }
+['pointerdown', 'keydown', 'touchend'].forEach(ev => document.addEventListener(ev, elUnlock, { capture: true, passive: true }));
+function curTime() { return S.playing ? (S.el ? EL.currentTime : S.ac.currentTime - S.startAt) : S.offset; }
 function play(onEnd) {
   if (!S.buf) return;
-  const ac = ensureAC(); ac.resume();
   if (S.offset >= S.buf.duration - 0.05) S.offset = 0;
+  if (!onEnd && !S.exporting && S.elBuf === S.buf && EL.src) {
+    const tok = ++S.token; S.el = true; S.playing = true;
+    try { EL.currentTime = S.offset; } catch (e) {}
+    EL.onended = () => elOnEnd(tok);
+    EL.play().catch(() => { if (tok !== S.token) return; S.el = false; S.playing = false; S.elBuf = null; play(); }); // blocked: fall back to Web Audio
+    updUI(); return;
+  }
+  S.el = false;
+  const ac = ensureAC(); ac.resume();
   const src = ac.createBufferSource(); src.buffer = S.buf; src.connect(S.gain); if (S.recDest) src.connect(S.recDest);
   const tok = ++S.token;
   src.onended = () => { if (tok !== S.token) return; S.playing = false; S.offset = S.buf.duration; S.src = null; updUI(); if (onEnd) onEnd(); else if (!S.exporting) onTrackEnd(); };
   S.startAt = ac.currentTime - S.offset; src.start(0, S.offset); S.src = src; S.playing = true; updUI();
 }
-function pause() { if (!S.playing) return; S.offset = curTime(); S.token++; try { S.src.stop(); } catch (e) {} S.src = null; S.playing = false; updUI(); }
-function seekTo(t) { const was = S.playing; if (was) pause(); S.offset = clamp(t, 0, S.buf ? S.buf.duration : 0); if (was) play(); }
+function pause() { if (!S.playing) return; S.offset = curTime(); S.token++; if (S.el) { S.playing = false; S.el = false; EL.pause(); } else { try { S.src.stop(); } catch (e) {} S.src = null; S.playing = false; } updUI(); }
+function seekTo(t) { if (S.playing && S.el && S.buf) { try { EL.currentTime = clamp(t, 0, S.buf.duration - 0.05); updMedia(); return; } catch (e) {} } const was = S.playing; if (was) pause(); S.offset = clamp(t, 0, S.buf ? S.buf.duration : 0); if (was) play(); }
 
 
 /* ================= tape racks ================= */
@@ -993,7 +1010,7 @@ async function decodeAnalyze(blob, name) {
   const ac = ensureAC();
   try {
     const buf = await ac.decodeAudioData(await blob.arrayBuffer());
-    S.A = null; S.buf = buf; S.offset = 0;
+    S.A = null; S.buf = buf; S.offset = 0; elSet(blob);
     const t0 = performance.now();
     S.A = await analyze(buf, p => setStatus(`Loading tape "${name}"… ${Math.round(p * 100)}%`));
     setStatus(`Tape in: "${name}" (${fmt(buf.duration)}). Right-click a tape to edit it.`);
@@ -1476,6 +1493,106 @@ $('tbRepeat').onclick = () => { REPEAT = !REPEAT; try { localStorage.setItem('tr
 $('tbStore').onclick = () => { location.href = 'https://video.trmz.app/'; };
 $('tbFs').onclick = () => document.fullscreenElement ? document.exitFullscreen().catch(() => {}) : goFullscreen();
 
+/* ================= lock screen / media keys (Media Session) ================= */
+const MS = 'mediaSession' in navigator ? navigator.mediaSession : null; let msId = null;
+function prevAction() { if (TAPES.length > 1 && curTime() < 3) nextTape(-1); else seekTo(0); }
+function updMedia() {
+  if (!MS) return;
+  const t = TAPES[curIndex()], key = t ? t.id + '|' + t.title + '|' + t.artist : $('title').value;
+  if (key !== msId && (t || S.buf)) {
+    msId = key;
+    try { MS.metadata = new MediaMetadata({ title: t ? t.title : ($('title').value || 'TRMZ OST'), artist: t ? (t.artist || '') : $('artist').value, album: 'TRMZ OST',
+      artwork: [{ src: new URL('art.png', location.href).href, sizes: '512x512', type: 'image/png' }] }); } catch (e) {}
+  }
+  try { MS.playbackState = S.playing ? 'playing' : (S.buf ? 'paused' : 'none'); } catch (e) {}
+  try { if (S.buf) MS.setPositionState({ duration: S.buf.duration, playbackRate: 1, position: clamp(curTime(), 0, S.buf.duration) }); } catch (e) {}
+}
+if (MS) {
+  const h = (a, f) => { try { MS.setActionHandler(a, f); } catch (e) {} };
+  h('play', () => { if (S.exporting) return; if (!S.buf) { const o = playOrder(); if (o.length) loadTape(o[0], true); } else if (!S.playing) play(); });
+  h('pause', () => pause());
+  h('stop', () => stopTape());
+  h('previoustrack', () => { if (!S.exporting) prevAction(); });
+  h('nexttrack', () => { if (!S.exporting && TAPES.length > 1) nextTape(1); });
+  h('seekto', d => { if (S.buf && !S.exporting) { seekTo(d.seekTime); updMedia(); } });
+  h('seekbackward', d => { if (!S.exporting) nudge(-(d.seekOffset || 10)); });
+  h('seekforward', d => { if (!S.exporting) nudge(d.seekOffset || 10); });
+}
+
+/* ================= mini player (Picture-in-Picture) ================= */
+// Chrome/Edge desktop: a real little window with buttons (Document Picture-in-Picture).
+// Everything else (Android, iPhone, Safari, Firefox-less): the moving boombox as a floating video.
+const DOC_PIP = 'documentPictureInPicture' in window && window.isSecureContext;
+const VID_PIP = !!(document.pictureInPictureEnabled || (window.HTMLVideoElement && HTMLVideoElement.prototype.webkitSupportsPresentationMode));
+let MINI = null;
+if ((DOC_PIP || VID_PIP) && cv.captureStream) $('tbPip').hidden = false;
+const ICO_PLAY = '<svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const ICO_PAUSE = '<svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>';
+function miniTick() { if (MINI && document.hidden) loopBody(performance.now()); } // the page's own animation stops when its tab is hidden
+function updMini() {
+  if (!MINI) return;
+  if (MINI.type === 'doc') {
+    const d = MINI.w.document, t = TAPES[curIndex()];
+    d.getElementById('p').innerHTML = S.playing ? ICO_PAUSE : ICO_PLAY; d.getElementById('p').title = S.playing ? 'Pause' : 'Play';
+    d.getElementById('n').disabled = TAPES.length < 2;
+    d.getElementById('t').textContent = t ? t.title + (t.artist ? '  ·  ' + t.artist : '') : ($('title').value || 'TRMZ OST');
+  } else if (MINI.type === 'vid') {
+    const v = MINI.v; if (S.playing && v.paused) v.play().catch(() => {}); else if (!S.playing && !v.paused) v.pause();
+  }
+}
+function closeMini() {
+  if (!MINI) return; const m = MINI; MINI = null;
+  clearInterval(m.iv); try { m.stream.getTracks().forEach(x => x.stop()); } catch (e) {}
+  if (m.type === 'doc') { try { m.w.close(); } catch (e) {} }
+  else { try { if (document.pictureInPictureElement) document.exitPictureInPicture().catch(() => {}); else if (m.v.webkitPresentationMode === 'picture-in-picture') m.v.webkitSetPresentationMode('inline'); } catch (e) {} m.v.remove(); }
+  $('tbPip').classList.remove('on');
+}
+async function openMini() {
+  if (MINI) { closeMini(); return; }
+  if (!S.buf && TAPES.length) { const o = playOrder(); if (o.length) loadTape(o[0], true); }
+  const stream = cv.captureStream(30);
+  if (DOC_PIP) {
+    let w; try { w = await documentPictureInPicture.requestWindow({ width: 480, height: 330 }); } catch (e) { stream.getTracks().forEach(x => x.stop()); setStatus('Mini player was blocked: ' + e.message); return; }
+    const d = w.document; d.title = 'TRMZ OST';
+    d.head.innerHTML = '<style>html,body{margin:0;height:100%;background:#000;overflow:hidden;font:14px system-ui,Segoe UI,sans-serif;color:#ffd9b0}video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}'
+      + '.bar{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(12,8,8,.72);backdrop-filter:blur(6px);border:1px solid rgba(255,190,140,.16);border-radius:30px;max-width:calc(100% - 20px);box-sizing:border-box;transition:opacity .4s}'
+      + 'body.idle .bar{opacity:0}button{width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#ffd9b0;display:flex;align-items:center;justify-content:center;padding:0;flex:none;cursor:pointer}button:hover{background:rgba(255,190,140,.14)}button:disabled{opacity:.3}'
+      + 'button.big{width:46px;height:46px;background:linear-gradient(#ff8a4a,#c4501f);color:#1a0d08}#t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;padding:0 6px;opacity:.9}</style>';
+    d.body.innerHTML = '<video id="v" autoplay muted playsinline></video><div class="bar"><button id="b" title="Previous"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><rect x="4" y="5" width="3" height="14"/><path d="M20 5v14L8 12z"/></svg></button>'
+      + '<button id="p" class="big"></button><button id="n" title="Next"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 5v14l12-7z"/><rect x="17" y="5" width="3" height="14"/></svg></button><span id="t"></span>'
+      + '<button id="x" title="Back to the full boombox"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M9 13l3-3 3 3M12 10v7"/></svg></button></div>';
+    const v = d.getElementById('v'); v.srcObject = stream; v.play().catch(() => {});
+    d.getElementById('b').onclick = () => prevAction();
+    d.getElementById('p').onclick = () => $('tbPlay').click();
+    d.getElementById('n').onclick = () => nextTape(1);
+    d.getElementById('x').onclick = () => { closeMini(); window.focus(); };
+    let it = 0; const wake = () => { d.body.classList.remove('idle'); clearTimeout(it); it = setTimeout(() => d.body.classList.add('idle'), 2500); };
+    d.addEventListener('pointermove', wake); wake();
+    d.addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); $('tbPlay').click(); } });
+    w.addEventListener('pagehide', () => { if (MINI && MINI.w === w) { MINI.w = null; closeMini(); } });
+    MINI = { type: 'doc', w, stream };
+    (function pipLoop() { if (!MINI || MINI.w !== w) return; miniTick(); w.requestAnimationFrame(pipLoop); })();
+  } else {
+    const v = document.createElement('video'); v.muted = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.autoplay = true;
+    v.style.cssText = 'position:fixed;left:0;bottom:0;width:2px;height:2px;opacity:0;pointer-events:none';
+    document.body.appendChild(v); v.srcObject = stream;
+    MINI = { type: 'vid', v, stream };
+    try {
+      await v.play();
+      if (v.requestPictureInPicture && document.pictureInPictureEnabled) await v.requestPictureInPicture();
+      else v.webkitSetPresentationMode('picture-in-picture');
+    } catch (e) { MINI = null; v.remove(); stream.getTracks().forEach(x => x.stop()); setStatus('Mini player was blocked: ' + e.message); return; }
+    v.addEventListener('leavepictureinpicture', () => { if (MINI && MINI.v === v) closeMini(); });
+    v.addEventListener('webkitpresentationmodechanged', () => { if (MINI && MINI.v === v && v.webkitPresentationMode === 'inline') closeMini(); });
+    // the play/pause button inside the floating window drives the music
+    v.addEventListener('pause', () => { if (MINI && MINI.v === v && S.playing && v.paused) pause(); });
+    v.addEventListener('play', () => { if (MINI && MINI.v === v && !S.playing && !v.paused && S.buf) play(); });
+    MINI.iv = setInterval(miniTick, 33);
+  }
+  $('tbPip').classList.add('on'); updMini();
+}
+$('tbPip').onclick = () => openMini();
+
 /* ================= UI ================= */
 function setStatus(s) { $('status').textContent = s; }
 function updUI() {
@@ -1491,6 +1608,7 @@ function updUI() {
   wakeLock(S.playing);
   updCredit();
   renderList();
+  updMedia(); updMini();
 }
 async function loadAudio(file) {
   if (!file || S.exporting) return;
@@ -1500,7 +1618,7 @@ async function loadAudio(file) {
     const buf = await ac.decodeAudioData(await file.arrayBuffer());
     const name = file.name.replace(/\.[^.]+$/, '').replace(/_/g, ' '), m = name.split(/\s+-\s+/);
     if (m.length >= 2) { $('artist').value = m[0].trim(); $('title').value = m.slice(1).join(' - ').trim(); } else $('title').value = name;
-    S.A = null; S.buf = buf; S.offset = 0;
+    S.A = null; S.buf = buf; S.offset = 0; elSet(file);
     const t0 = performance.now();
     S.A = await analyze(buf, p => setStatus(`Analyzing audio… ${Math.round(p * 100)}%`));
     setStatus(`Loaded "${file.name}" (${fmt(buf.duration)}), analyzed in ${((performance.now() - t0) / 1000).toFixed(1)}s. Check the song name and creator, then Play or Export.`);
@@ -1657,12 +1775,12 @@ idbGet('img').then(b => { if (b && !IMG) setImage(b, false).then(updUI).catch(()
 rackRestore();
 updUI(); showBar();
 let lastUi = 0;
-(function loop(ts) {
+function loopBody(ts) {
   render();
   $('tbProgFill').style.width = S.buf ? (clamp(curTime() / S.buf.duration, 0, 1) * 100).toFixed(2) + '%' : '0%';
   if (S.buf && ts - lastUi > 200) { lastUi = ts; const t = curTime(); $('time').textContent = $('tbTime').textContent = fmt(t) + ' / ' + fmt(S.buf.duration); if (document.activeElement !== $('seek')) $('seek').value = Math.round(t / S.buf.duration * 1000); }
-  requestAnimationFrame(loop);
-})(0);
+}
+(function loop(ts) { loopBody(ts); requestAnimationFrame(loop); })(0);
 window.__bb = { S, analyze, render, setImage, get zones() { return zones; }, set zones(v) { zones = v; buildPanel(); }, loadBuffer: async (buf, title, artist) => { S.buf = buf; S.A = await analyze(buf); $('title').value = title || ''; $('artist').value = artist || ''; updUI(); } };
 </script>
 </body>
