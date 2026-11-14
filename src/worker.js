@@ -70,10 +70,12 @@ async function auth(req, env) {
 }
 
 // ---------- handlers ----------
+const ALLOW_DL = false; // fan downloads switched off
 async function serveAudio(req, env, id, url) {
   if (!ID_RE.test(id)) return new Response('Not found', { status: 404 });
   let dlName = null;
   if (url.searchParams.has('dl')) {
+    if (!ALLOW_DL) return new Response('Downloads are off', { status: 403 });
     const site = await getSite(env), t = site.tapes.find(x => x.id === id);
     if (!t || t.download === false) return new Response('Download not available for this tape', { status: 403 });
     const ext = (t.file || '').match(/\.[a-z0-9]{2,5}$/i)?.[0] || '.mp3';

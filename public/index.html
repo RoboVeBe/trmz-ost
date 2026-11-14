@@ -939,7 +939,7 @@ cv.addEventListener('pointerdown', e => {
       if (sl.p > list.length || (sl.p === list.length && VIEWER)) return;
       if (sl.p === list.length) { $('tapeFile').click(); return; }
       const ti = list[sl.p], ic = e.pointerType === 'touch' ? null : iconAt(lx, ly, sl);
-      if (ic === 'dl') { downloadTape(TAPES[ti]); return; }
+      if (ic === 'dl' && ALLOW_DL) { downloadTape(TAPES[ti]); return; }
       if (ic === 'yt') { openLink(TAPES[ti].link); return; }
       if (ic === 'edit') { $('tdForm').dataset.direct = '0'; openTapeDialog(ti, false); return; }
       if (ic === 'del') { $('tdForm').dataset.direct = '1'; openTapeDialog(ti, true); return; }
@@ -1097,7 +1097,8 @@ function updCredit() {
   if (t.link) { el.href = t.link; el.classList.add('has'); el.title = 'Open ' + (t.artist || 'the creator') + ' on YouTube'; }
   else { el.removeAttribute('href'); el.classList.remove('has'); el.title = ''; }
 }
-function viewerIcons(t) { const k = []; if (t && t.link) k.push('yt'); if (t && SITE_API && t.download !== false && t.src) k.push('dl'); if (k.length === 1 && k[0] === 'yt') return ['yt']; return k; }
+const ALLOW_DL = false; // fan downloads switched off (set true to bring the download buttons back)
+function viewerIcons(t) { const k = []; if (t && t.link) k.push('yt'); if (t && ALLOW_DL && SITE_API && t.download !== false && t.src) k.push('dl'); if (k.length === 1 && k[0] === 'yt') return ['yt']; return k; }
 function downloadTape(t) {
   const a = document.createElement('a'); a.href = t.src + '?dl=1'; a.download = ''; document.body.appendChild(a); a.click(); a.remove();
 }
@@ -1369,7 +1370,7 @@ function openTapeDialog(i, confirmDelete) {
   const t = TAPES[i]; if (!t) return;
   dlgIdx = i; dlgLabel = t.label || 'cream';
   $('tdTitle').value = t.title || ''; $('tdArtist').value = t.artist || ''; $('tdMsg').value = t.msg || ''; $('tdLink').value = t.link || '';
-  $('tdDlRow').style.display = SITE_API ? 'block' : 'none'; $('tdDl').checked = t.download !== false;
+  $('tdDlRow').style.display = ALLOW_DL && SITE_API ? 'block' : 'none'; $('tdDl').checked = t.download !== false;
   document.querySelectorAll('#tdlg [data-dc]').forEach(el => el.classList.toggle('on', el.dataset.dc === dlgLabel));
   showDlgPart(confirmDelete ? 'confirm' : 'form');
   $('tdlg').classList.add('open');
@@ -1461,7 +1462,7 @@ function renderList() {
     row.innerHTML = '<span class="plDrag" title="Drag to reorder">≡</span>' +
       `<span class="plLab" style="background:${L[0]};border-left:6px solid ${L[1]}"></span><span class="plTxt"><b></b><small></small></span><span class="plDur"></span>` +
       (t.link ? '<button class="plBtn plYt" tabindex="-1" title="Creator on YouTube">▶</button>' : '') +
-      (SITE_API && t.download !== false && t.src ? '<button class="plBtn plDl" tabindex="-1" title="Download">⬇</button>' : '');
+      (ALLOW_DL && SITE_API && t.download !== false && t.src ? '<button class="plBtn plDl" tabindex="-1" title="Download">⬇</button>' : '');
     row.querySelector('b').textContent = t.title || t.file || 'Untitled';
     row.querySelector('small').textContent = t.artist ? 'by ' + t.artist : '';
     row.querySelector('.plDur').textContent = t.dur ? fmt(t.dur) : '';
